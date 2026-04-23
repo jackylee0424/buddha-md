@@ -1,6 +1,6 @@
 # buddha-md
 
-A collection of transcripts from lectures on the **Diamond Sutra** (金剛般若波羅蜜經), delivered by Teacher Li Ruilie (李瑞烈老師) in Traditional Chinese.
+A collection of transcripts from lectures on the **Diamond Sutra** (金剛般若波羅蜜經), delivered by Teacher Li Ruilie (李瑞烈老師) in Traditional Chinese. Source: https://www.youtube.com/watch?v=PvFx_UBTp9c&list=PLQP2d9x3sdYYfYK955L0rfZO3TPoRX5yQ
 
 ## About
 
