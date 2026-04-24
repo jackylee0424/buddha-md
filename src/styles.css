@@ -91,6 +91,13 @@ button {
   pointer-events: none;
 }
 
+.hero__toolbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
 .hero__kicker,
 .section-heading__eyebrow,
 .session-detail__eyebrow {
@@ -99,6 +106,34 @@ button {
   text-transform: uppercase;
   font-size: 0.75rem;
   color: #d2aa61;
+}
+
+.language-toggle {
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid rgba(223, 184, 106, 0.18);
+  background: rgba(13, 7, 3, 0.42);
+}
+
+.language-toggle__button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  color: #e7d2a0;
+  background: transparent;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.language-toggle__button:hover {
+  transform: translateY(-1px);
+}
+
+.language-toggle__button--active {
+  color: #fff3d4;
+  background: linear-gradient(180deg, rgba(189, 128, 38, 0.38), rgba(109, 65, 18, 0.38));
+  box-shadow: inset 0 1px 0 rgba(255, 226, 169, 0.08);
 }
 
 .hero h1 {
@@ -310,11 +345,20 @@ button {
 }
 
 @media (max-width: 900px) {
+  .hero__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .teaching-grid,
   .sessions-layout,
   .session-detail__meta,
   .hero__meta {
     grid-template-columns: 1fr;
+  }
+
+  .language-toggle {
+    align-self: flex-start;
   }
 
   .app-shell {

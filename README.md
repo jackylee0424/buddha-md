@@ -71,7 +71,7 @@ python3 scripts/validate_transcripts.py --json
 
 ## Website
 
-This repository now includes a Vite + React website that presents the lecture material in an ancient-style Buddhist visual language.
+This repository now includes a Vite + React website that presents the lecture material in an ancient-style Buddhist visual language, with a **繁體 / 简体** toggle for the website chrome and archive excerpts.
 
 ### Local development
 
@@ -80,10 +80,17 @@ npm install
 npm run dev
 ```
 
-### Production build
+### Release build
 
 ```bash
 npm run build
+```
+
+The production bundle is emitted to `release/` (gitignored).
+
+### Local preview
+
+```bash
 npm run preview
 ```
 

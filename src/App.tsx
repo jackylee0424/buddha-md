@@ -1,54 +1,88 @@
-import { useMemo, useState } from 'react';
-import { featuredTeachings, ritualSteps, sessions, siteMeta } from './data/siteData';
+import { useEffect, useMemo, useState } from 'react';
+import { archiveStats, localizedContent, type Locale } from './data/siteData';
 import './styles.css';
 
-const numberFormatter = new Intl.NumberFormat('zh-Hant-TW');
+const localeOrder: Locale[] = ['zh-Hant', 'zh-Hans'];
+const numberFormatters: Record<Locale, Intl.NumberFormat> = {
+  'zh-Hant': new Intl.NumberFormat('zh-Hant-TW'),
+  'zh-Hans': new Intl.NumberFormat('zh-CN')
+};
 
 function App() {
+  const [locale, setLocale] = useState<Locale>('zh-Hant');
   const [selectedSessionId, setSelectedSessionId] = useState<number>(1);
 
+  const content = localizedContent[locale];
   const activeSession = useMemo(
-    () => sessions.find((session) => session.id === selectedSessionId) ?? sessions[0],
-    [selectedSessionId]
+    () => content.sessions.find((session) => session.id === selectedSessionId) ?? content.sessions[0],
+    [content.sessions, selectedSessionId]
   );
+  const formatter = numberFormatters[locale];
+
+  useEffect(() => {
+    document.documentElement.lang = content.htmlLang;
+    document.title = content.title;
+    const descriptionTag = document.querySelector('meta[name="description"]');
+    if (descriptionTag) {
+      descriptionTag.setAttribute('content', content.description);
+    }
+  }, [content]);
 
   return (
     <div className="app-shell">
       <div className="ink-overlay" aria-hidden="true" />
       <header className="hero scroll-panel">
-        <p className="hero__kicker">般若 · 修行 · 彼岸</p>
-        <h1>{siteMeta.title}</h1>
-        <p className="hero__subtitle">{siteMeta.subtitle}</p>
-        <p className="hero__description">{siteMeta.description}</p>
-
-        <div className="hero__meta">
-          <div>
-            <span>藏錄</span>
-            <strong>{siteMeta.stats.sessions} 講</strong>
-          </div>
-          <div>
-            <span>段落</span>
-            <strong>{numberFormatter.format(siteMeta.stats.totalParagraphs)}</strong>
-          </div>
-          <div>
-            <span>字數</span>
-            <strong>{numberFormatter.format(siteMeta.stats.totalChars)}</strong>
+        <div className="hero__toolbar">
+          <p className="hero__kicker">{content.heroKicker}</p>
+          <div className="language-toggle" role="group" aria-label={content.languageToggleLabel}>
+            {localeOrder.map((nextLocale) => (
+              <button
+                key={nextLocale}
+                type="button"
+                className={nextLocale === locale ? 'language-toggle__button language-toggle__button--active' : 'language-toggle__button'}
+                aria-pressed={nextLocale === locale}
+                onClick={() => setLocale(nextLocale)}
+              >
+                {content.languages[nextLocale]}
+              </button>
+            ))}
           </div>
         </div>
 
-        <a className="hero__source" href={siteMeta.sourceUrl} target="_blank" rel="noreferrer">
-          {siteMeta.sourceLabel}
+        <h1>{content.title}</h1>
+        <p className="hero__subtitle">{content.subtitle}</p>
+        <p className="hero__description">{content.description}</p>
+
+        <div className="hero__meta">
+          <div>
+            <span>{content.statsLabels.sessions}</span>
+            <strong>
+              {archiveStats.sessions} {content.statsUnits.sessions}
+            </strong>
+          </div>
+          <div>
+            <span>{content.statsLabels.paragraphs}</span>
+            <strong>{formatter.format(archiveStats.totalParagraphs)}</strong>
+          </div>
+          <div>
+            <span>{content.statsLabels.chars}</span>
+            <strong>{formatter.format(archiveStats.totalChars)}</strong>
+          </div>
+        </div>
+
+        <a className="hero__source" href={content.sourceUrl} target="_blank" rel="noreferrer">
+          {content.sourceLabel}
         </a>
       </header>
 
       <main className="content-grid">
         <section className="scroll-panel section-card">
           <div className="section-heading">
-            <span className="section-heading__eyebrow">法義三門</span>
-            <h2>古意經藏之綱領</h2>
+            <span className="section-heading__eyebrow">{content.teachingsEyebrow}</span>
+            <h2>{content.teachingsHeading}</h2>
           </div>
           <div className="teaching-grid">
-            {featuredTeachings.map((teaching) => (
+            {content.featuredTeachings.map((teaching) => (
               <article key={teaching.title} className="teaching-card">
                 <div className="teaching-card__seal" aria-hidden="true">
                   ☸
@@ -62,11 +96,11 @@ function App() {
 
         <section className="scroll-panel section-card section-card--ritual">
           <div className="section-heading">
-            <span className="section-heading__eyebrow">閱藏次第</span>
-            <h2>觀照與實修</h2>
+            <span className="section-heading__eyebrow">{content.ritualEyebrow}</span>
+            <h2>{content.ritualHeading}</h2>
           </div>
           <ol className="ritual-list">
-            {ritualSteps.map((step) => (
+            {content.ritualSteps.map((step) => (
               <li key={step}>{step}</li>
             ))}
           </ol>
@@ -74,13 +108,13 @@ function App() {
 
         <section className="scroll-panel section-card section-card--sessions">
           <div className="section-heading">
-            <span className="section-heading__eyebrow">廿七講總覽</span>
-            <h2>逐講選讀</h2>
+            <span className="section-heading__eyebrow">{content.sessionsEyebrow}</span>
+            <h2>{content.sessionsHeading}</h2>
           </div>
 
           <div className="sessions-layout">
-            <div className="session-selector" role="list" aria-label="講次列表">
-              {sessions.map((session) => (
+            <div className="session-selector" role="list" aria-label={content.sessionsListLabel}>
+              {content.sessions.map((session) => (
                 <button
                   key={session.id}
                   type="button"
@@ -94,22 +128,22 @@ function App() {
 
             <article className="session-detail">
               <div className="session-detail__header">
-                <p className="session-detail__eyebrow">卷軸摘錄</p>
+                <p className="session-detail__eyebrow">{content.sessionDetailEyebrow}</p>
                 <h3>{activeSession.title}</h3>
               </div>
               <p className="session-detail__excerpt">{activeSession.excerpt}</p>
               <dl className="session-detail__meta">
                 <div>
-                  <dt>段落數</dt>
-                  <dd>{numberFormatter.format(activeSession.paragraphCount)}</dd>
+                  <dt>{content.sessionMetaLabels.paragraphCount}</dt>
+                  <dd>{formatter.format(activeSession.paragraphCount)}</dd>
                 </div>
                 <div>
-                  <dt>字數</dt>
-                  <dd>{numberFormatter.format(activeSession.charCount)}</dd>
+                  <dt>{content.sessionMetaLabels.charCount}</dt>
+                  <dd>{formatter.format(activeSession.charCount)}</dd>
                 </div>
                 <div>
-                  <dt>旨趣</dt>
-                  <dd>以經解心，以行證義</dd>
+                  <dt>{content.sessionMetaLabels.focus}</dt>
+                  <dd>{activeSession.focus}</dd>
                 </div>
               </dl>
             </article>

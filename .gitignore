@@ -19,6 +19,7 @@ venv/
 # Web dependencies / builds
 node_modules/
 dist/
+release/
 
 # Local validation output
 reports/
