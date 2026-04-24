@@ -1,46 +1,82 @@
 # buddha-md
 
-A collection of transcripts from lectures on the **Diamond Sutra** (金剛般若波羅蜜經), delivered by Teacher Li Ruilie (李瑞烈老師) in Traditional Chinese. Source: https://www.youtube.com/watch?v=PvFx_UBTp9c&list=PLQP2d9x3sdYYfYK955L0rfZO3TPoRX5yQ
+A text archive of Traditional Chinese transcripts from Teacher Li Ruilie's (李瑞烈老師) lecture series on the **Diamond Sutra** (金剛般若波羅蜜經).
+
+Source playlist: https://www.youtube.com/watch?v=PvFx_UBTp9c&list=PLQP2d9x3sdYYfYK955L0rfZO3TPoRX5yQ
 
 ## About
 
-The Diamond Sutra (金剛經, *Vajracchedikā Prajñāpāramitā Sūtra*) is one of the most influential texts in Mahayana Buddhism. It teaches the practice of non-attachment and the perfection of wisdom (*prajñāpāramitā*), guiding practitioners toward liberation from the cycle of birth and death.
+The Diamond Sutra (金剛經, *Vajracchedikā Prajñāpāramitā Sūtra*) is one of the most influential texts in Mahayana Buddhism. This repository preserves lecture transcripts in plain text for reading, searching, and downstream editorial or archival work.
 
-These lecture transcripts present Teacher Li Ruilie's commentary on the Diamond Sutra, drawing on the insights of classical masters including:
+The lectures draw on the insights of classical masters including:
 
 - **惠能六祖** (the Sixth Patriarch Huineng)
 - **呂純陽祖師** (Ancestor Lü Chunyang)
 - **月溪法師** (Master Yuexi)
 - **道濟禪師** (Chan Master Daoji)
 
-The lectures emphasize that understanding the sutra must be accompanied by genuine practice — as the text itself teaches, *"不修即凡夫，修耶同聖智"* (without practice one remains an ordinary person; with practice one shares in the wisdom of sages).
+The teaching emphasis, as reflected in the lectures, is that understanding the sutra must be joined to actual practice: *"不修即凡夫，修耶同聖智"*.
+
+## Repository layout
+
+```text
+.
+├── README.md
+├── LICENSE
+├── scripts/
+│   └── validate_transcripts.py
+└── transcripts/
+    ├── gold01.txt
+    ├── gold02.txt
+    ├── ...
+    └── gold27.txt
+```
 
 ## Contents
 
-All transcripts are located in the [`transcripts/`](transcripts/) directory, spanning 27 sessions:
+All transcripts are stored in the [`transcripts/`](transcripts/) directory.
 
-| File | Session |
-|------|---------|
-| `gold01.txt` | Session 1 |
-| `gold02.txt` | Session 2 |
-| `gold03.txt` | Session 3 |
-| … | … |
-| `gold27.txt` | Session 27 |
+- Sessions currently included: **27**
+- Naming convention: `goldNN.txt`
+- Range: `gold01.txt` → `gold27.txt`
 
-Each file is a verbatim transcript of an individual lecture session in Traditional Chinese.
+Each file is a plain-text transcript of one lecture session in Traditional Chinese.
+
+## Validation
+
+A small integrity checker is included for archive maintenance.
+
+```bash
+python3 scripts/validate_transcripts.py
+```
+
+It verifies:
+
+- session-number continuity
+- UTF-8 decoding
+- duplicate-file detection by SHA-256
+- basic size / line-count reporting
+
+For machine-readable output:
+
+```bash
+python3 scripts/validate_transcripts.py --json
+```
 
 ## Usage
 
-The transcripts are plain text files and can be read with any text editor. To browse them from the command line:
+Read directly from the command line:
 
 ```bash
-# List all transcript files
-ls transcripts/
+# Read one session
+less transcripts/gold01.txt
 
-# Read a transcript
-cat transcripts/gold01.txt
+# Search across all sessions
+grep -R "般若" transcripts/
 ```
 
-## License
+## Provenance and rights
 
-This project is licensed under the [MIT License](LICENSE).
+This repository identifies the public lecture playlist used as the source for the archived transcripts. If these transcripts are later revised, normalized, or supplemented with editorial metadata, that provenance should be kept alongside the files.
+
+The repository is currently licensed under the [MIT License](LICENSE). If publication or redistribution terms for the underlying lecture content need to be narrowed or clarified, update this section accordingly.
