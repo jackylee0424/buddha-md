@@ -1,0 +1,327 @@
+:root {
+  color-scheme: dark;
+  font-family: 'Noto Serif TC', serif;
+  line-height: 1.6;
+  font-weight: 400;
+  color: #f7ebc7;
+  background:
+    radial-gradient(circle at top, rgba(122, 84, 26, 0.2), transparent 35%),
+    linear-gradient(180deg, #23150b 0%, #120a05 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: transparent;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-shell {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 20px 64px;
+}
+
+.ink-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255, 208, 121, 0.06), transparent 22%),
+    radial-gradient(circle at 85% 10%, rgba(255, 208, 121, 0.08), transparent 20%),
+    radial-gradient(circle at 50% 80%, rgba(97, 56, 24, 0.2), transparent 28%);
+  mix-blend-mode: screen;
+}
+
+.hero,
+.section-card {
+  position: relative;
+  margin: 0 auto;
+  width: min(1120px, 100%);
+}
+
+.scroll-panel {
+  border: 1px solid rgba(220, 180, 103, 0.24);
+  background:
+    linear-gradient(180deg, rgba(72, 43, 18, 0.88) 0%, rgba(29, 16, 8, 0.94) 100%),
+    #1a0f08;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 226, 169, 0.08),
+    inset 0 0 0 1px rgba(141, 104, 43, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+.hero {
+  padding: 56px clamp(24px, 4vw, 60px);
+  border-radius: 32px;
+}
+
+.hero::before,
+.section-card::before {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(223, 184, 106, 0.14);
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.hero__kicker,
+.section-heading__eyebrow,
+.session-detail__eyebrow {
+  margin: 0 0 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: #d2aa61;
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: clamp(3rem, 8vw, 5.8rem);
+  font-weight: 400;
+  line-height: 1.05;
+  color: #f8e7bd;
+  text-shadow: 0 0 24px rgba(255, 214, 130, 0.12);
+}
+
+.hero__subtitle {
+  margin: 12px 0 0;
+  font-size: clamp(1.1rem, 2.8vw, 1.55rem);
+  color: #efd6a1;
+}
+
+.hero__description {
+  max-width: 720px;
+  margin: 18px 0 0;
+  font-size: 1rem;
+  color: rgba(246, 228, 188, 0.9);
+}
+
+.hero__meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.hero__meta div,
+.session-detail__meta div {
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(11, 6, 3, 0.24);
+  border: 1px solid rgba(220, 180, 103, 0.18);
+}
+
+.hero__meta span,
+.session-detail__meta dt {
+  display: block;
+  font-size: 0.8rem;
+  color: #c69b53;
+}
+
+.hero__meta strong,
+.session-detail__meta dd {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.1rem;
+  color: #fff0cb;
+}
+
+.hero__source {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  background: rgba(201, 153, 75, 0.12);
+  border: 1px solid rgba(215, 171, 95, 0.26);
+}
+
+.hero__source::before {
+  content: '◉';
+  color: #d2aa61;
+}
+
+.content-grid {
+  display: grid;
+  gap: 24px;
+  margin: 24px auto 0;
+  width: min(1120px, 100%);
+}
+
+.section-card {
+  padding: 34px clamp(22px, 4vw, 40px);
+  border-radius: 28px;
+}
+
+.section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.section-heading h2,
+.session-detail h3 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  color: #fdecc6;
+}
+
+.teaching-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.teaching-card {
+  position: relative;
+  padding: 24px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(120, 75, 30, 0.17), rgba(21, 10, 4, 0.2));
+  border: 1px solid rgba(223, 184, 106, 0.18);
+}
+
+.teaching-card__seal {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  margin-bottom: 16px;
+  color: #ffde98;
+  background: rgba(255, 206, 106, 0.08);
+  border: 1px solid rgba(255, 206, 106, 0.22);
+}
+
+.teaching-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.25rem;
+}
+
+.teaching-card p,
+.ritual-list li,
+.session-detail__excerpt {
+  margin: 0;
+  color: rgba(247, 233, 199, 0.9);
+}
+
+.ritual-list {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding-left: 22px;
+}
+
+.section-card--ritual {
+  background:
+    linear-gradient(180deg, rgba(65, 35, 13, 0.9) 0%, rgba(28, 16, 8, 0.95) 100%),
+    #1a0f08;
+}
+
+.sessions-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.95fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.session-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.session-chip {
+  border: 1px solid rgba(223, 184, 106, 0.18);
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: rgba(20, 10, 4, 0.5);
+  color: #ead7ab;
+  cursor: pointer;
+  transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+
+.session-chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(245, 206, 123, 0.48);
+}
+
+.session-chip--active {
+  background: linear-gradient(180deg, rgba(189, 128, 38, 0.35), rgba(109, 65, 18, 0.35));
+  color: #fff3d4;
+  border-color: rgba(255, 214, 130, 0.52);
+  box-shadow: 0 10px 22px rgba(146, 93, 20, 0.2);
+}
+
+.session-detail {
+  padding: 24px;
+  border-radius: 24px;
+  background: rgba(16, 8, 3, 0.45);
+  border: 1px solid rgba(223, 184, 106, 0.18);
+}
+
+.session-detail__header {
+  margin-bottom: 16px;
+}
+
+.session-detail__excerpt {
+  font-size: 1rem;
+}
+
+.session-detail__meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 20px 0 0;
+}
+
+.session-detail__meta dd {
+  margin: 5px 0 0;
+}
+
+@media (max-width: 900px) {
+  .teaching-grid,
+  .sessions-layout,
+  .session-detail__meta,
+  .hero__meta {
+    grid-template-columns: 1fr;
+  }
+
+  .app-shell {
+    padding-inline: 14px;
+  }
+
+  .hero {
+    padding-top: 42px;
+  }
+}

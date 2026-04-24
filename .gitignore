@@ -16,5 +16,9 @@ __pycache__/
 .venv/
 venv/
 
+# Web dependencies / builds
+node_modules/
+dist/
+
 # Local validation output
 reports/

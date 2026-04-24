@@ -23,8 +23,14 @@ The teaching emphasis, as reflected in the lectures, is that understanding the s
 .
 ├── README.md
 ├── LICENSE
+├── index.html
+├── package.json
 ├── scripts/
 │   └── validate_transcripts.py
+├── src/
+│   ├── App.tsx
+│   ├── data/siteData.ts
+│   └── styles.css
 └── transcripts/
     ├── gold01.txt
     ├── gold02.txt
@@ -61,6 +67,30 @@ For machine-readable output:
 
 ```bash
 python3 scripts/validate_transcripts.py --json
+```
+
+## Website
+
+This repository now includes a Vite + React website that presents the lecture material in an ancient-style Buddhist visual language.
+
+### Local development
+
+```bash
+npm install
+npm run dev
+```
+
+### Production build
+
+```bash
+npm run build
+npm run preview
+```
+
+### UI smoke test
+
+```bash
+npm test
 ```
 
 ## Usage
