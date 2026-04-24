@@ -49,7 +49,9 @@ function App() {
           </div>
         </div>
 
-        <h1>{content.title}</h1>
+        <h1 className={locale === 'zh-Hant' ? 'hero__title hero__title--han' : 'hero__title hero__title--latin'}>
+          {content.title}
+        </h1>
         <p className="hero__subtitle">{content.subtitle}</p>
         <p className="hero__description">{content.description}</p>
 
