@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { archiveStats, localizedContent, type Locale } from './data/siteData';
 import './styles.css';
 
-const localeOrder: Locale[] = ['zh-Hant', 'zh-Hans'];
+const localeOrder: Locale[] = ['zh-Hant', 'en'];
 const numberFormatters: Record<Locale, Intl.NumberFormat> = {
   'zh-Hant': new Intl.NumberFormat('zh-Hant-TW'),
-  'zh-Hans': new Intl.NumberFormat('zh-CN')
+  en: new Intl.NumberFormat('en-US')
 };
 
 function App() {
