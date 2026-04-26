@@ -37,6 +37,10 @@ function App() {
   const formatter = numberFormatters[locale];
   const lecture = route.view === 'lecture' ? lecturePages[route.lectureId] : undefined;
   const lectureIsAvailable = Boolean(lecture && availableLectureIds.includes(lecture.id as (typeof availableLectureIds)[number]));
+  const lectureHasEnglish = Boolean(lecture?.enTitle && lecture?.enSummary && lecture?.enFull?.length);
+  const lectureTitle = lecture ? (locale === 'en' && lectureHasEnglish ? lecture.enTitle! : lecture.zhTitle) : lectureChrome.unavailableTitle;
+  const lectureSummary = lecture ? (locale === 'en' && lectureHasEnglish ? lecture.enSummary! : lecture.zhSummary) : lectureChrome.unavailableBody;
+  const lectureParagraphs = lecture ? (locale === 'en' && lectureHasEnglish ? lecture.enFull! : lecture.zhFull) : [];
 
   const sessionCards = useMemo(
     () =>
@@ -46,7 +50,12 @@ function App() {
 
         return {
           ...session,
-          cardText: locale === 'zh-Hant' && page ? page.zhSummary : session.excerpt,
+          cardText:
+            locale === 'zh-Hant' && page
+              ? page.zhSummary
+              : locale === 'en' && page?.enSummary
+                ? page.enSummary
+                : session.excerpt,
           isAvailable
         };
       }),
@@ -60,18 +69,20 @@ function App() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.lang = route.view === 'lecture' ? 'zh-Hant' : content.htmlLang;
+    document.documentElement.lang = route.view === 'lecture' ? (locale === 'en' && lectureHasEnglish ? 'en' : 'zh-Hant') : content.htmlLang;
 
     if (route.view === 'lecture') {
-      const pageTitle = lecture ? `${lecture.zhTitle} · 金剛經講記` : `講次整理中 · 金剛經講記`;
+      const pageTitle = lecture ? `${lectureTitle} · 金剛經講記` : `講次整理中 · 金剛經講記`;
       document.title = pageTitle;
       const descriptionTag = document.querySelector('meta[name="description"]');
       if (descriptionTag) {
         descriptionTag.setAttribute(
           'content',
           lecture
-            ? lecture.zhSummary
-            : '前三講繁體中文全文頁面已上線，其餘講次將依序整理。'
+            ? lectureSummary
+            : locale === 'en'
+              ? 'English full-text pages are currently available for lectures 01–03; all 27 lectures remain available in Traditional Chinese.'
+              : '目前已先完成第 01 至 27 講的繁體中文全文頁面。'
         );
       }
       return;
@@ -82,7 +93,7 @@ function App() {
     if (descriptionTag) {
       descriptionTag.setAttribute('content', content.description);
     }
-  }, [content, lecture, route.view]);
+  }, [content, lecture, lectureHasEnglish, lectureSummary, lectureTitle, locale, route.view]);
 
   const goHome = () => {
     window.location.hash = '';
@@ -237,9 +248,9 @@ function App() {
           </div>
         </div>
 
-        <p className="detail-note">{lectureChrome.chromeNote}</p>
-        <h1 className="hero__title hero__title--han">{lecture ? lecture.zhTitle : lectureChrome.unavailableTitle}</h1>
-        <p className="hero__description">{lecture ? lecture.zhSummary : lectureChrome.unavailableBody}</p>
+        <p className="detail-note">{lecture ? (locale === 'en' && lectureHasEnglish ? lectureChrome.chromeNoteReady : lectureChrome.chromeNote) : lectureChrome.chromeNote}</p>
+        <h1 className={locale === 'en' && lectureHasEnglish ? 'hero__title hero__title--latin' : 'hero__title hero__title--han'}>{lectureTitle}</h1>
+        <p className="hero__description">{lectureSummary}</p>
 
         <div className="detail-actions">
           <button type="button" className="detail-link detail-link--button" onClick={goHome}>
@@ -252,11 +263,11 @@ function App() {
       {lectureIsAvailable && lecture ? (
         <article className="scroll-panel section-card lecture-detail">
           <div className="section-heading">
-            <span className="section-heading__eyebrow">{lectureChrome.fullTextReady}</span>
-            <h2>{lecture.zhTitle}</h2>
+            <span className="section-heading__eyebrow">{locale === 'en' && lectureHasEnglish ? lectureChrome.fullTextReadyEnglish : lectureChrome.fullTextReady}</span>
+            <h2>{lectureTitle}</h2>
           </div>
           <div className="lecture-detail__body">
-            {lecture.zhFull.map((paragraph) => (
+            {lectureParagraphs.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>

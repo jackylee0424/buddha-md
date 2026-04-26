@@ -22,7 +22,7 @@ describe('App', () => {
     fireEvent.click(screen.getByRole('button', { name: 'English' }));
 
     expect(screen.getByRole('heading', { name: 'Diamond Sutra Lecture Archive', level: 1 })).toBeInTheDocument();
-    expect(screen.getByText(/Traditional Chinese full-text pages/)).toBeInTheDocument();
+    expect(screen.getByText(/Lecture pages and English rollout/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'English', pressed: true })).toBeInTheDocument();
     expect(screen.getByText(/Li Ruilie Diamond Sutra lecture playlist/)).toBeInTheDocument();
   });
@@ -36,5 +36,20 @@ describe('App', () => {
     ).toBeInTheDocument();
     expect(screen.getByText(/《金剛般若波羅蜜經》的經題說起/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '返回首頁總覽' })).toBeInTheDocument();
+  });
+
+
+  it('shows the English lecture page for lecture 1 when English is selected', async () => {
+    window.location.hash = '#/lecture/1';
+    render(<App />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'English' }));
+
+    expect(
+      await screen.findByRole('heading', { name: 'Diamond Sutra Lecture 1: The Meaning of the Title and the Foundations of Practice', level: 1 })
+    ).toBeInTheDocument();
+    expect(screen.getByText(/This lecture now has a full English page\./)).toBeInTheDocument();
+    expect(screen.getByText(/This lecture begins with the title of the Vajra Prajna Paramita Sutra\./)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Back to archive index' })).toBeInTheDocument();
   });
 });
