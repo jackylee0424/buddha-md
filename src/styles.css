@@ -169,36 +169,6 @@ button {
   color: rgba(246, 228, 188, 0.9);
 }
 
-.hero__meta {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 28px;
-}
-
-.hero__meta div,
-.session-detail__meta div {
-  padding: 14px 16px;
-  border-radius: 18px;
-  background: rgba(11, 6, 3, 0.24);
-  border: 1px solid rgba(220, 180, 103, 0.18);
-}
-
-.hero__meta span,
-.session-detail__meta dt {
-  display: block;
-  font-size: 0.8rem;
-  color: #c69b53;
-}
-
-.hero__meta strong,
-.session-detail__meta dd {
-  display: block;
-  margin-top: 4px;
-  font-size: 1.1rem;
-  color: #fff0cb;
-}
-
 .hero__source {
   display: inline-flex;
   align-items: center;
@@ -349,17 +319,6 @@ button {
   font-size: 1rem;
 }
 
-.session-detail__meta {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin: 20px 0 0;
-}
-
-.session-detail__meta dd {
-  margin: 5px 0 0;
-}
-
 .lecture-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -379,7 +338,18 @@ button {
 .lecture-card__header {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 16px;
+}
+
+.lecture-card__title {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+
+.lecture-card__title-focus {
+  color: #efd6a1;
 }
 
 .lecture-card__eyebrow,
@@ -402,18 +372,9 @@ button {
   white-space: nowrap;
 }
 
-.lecture-card__status--ready {
-  color: #fff3d4;
-  background: linear-gradient(180deg, rgba(189, 128, 38, 0.35), rgba(109, 65, 18, 0.35));
-}
-
 .lecture-card__summary {
   margin: 0;
   color: rgba(247, 233, 199, 0.92);
-}
-
-.lecture-card__meta {
-  margin: 0;
 }
 
 .lecture-card__link,
@@ -428,6 +389,11 @@ button {
   background: rgba(201, 153, 75, 0.12);
   color: #fff0cb;
   text-decoration: none;
+}
+
+.lecture-card__link--header {
+  flex-shrink: 0;
+  min-width: 72px;
 }
 
 .detail-link--button {
@@ -491,9 +457,7 @@ button {
   }
 
   .teaching-grid,
-  .hero__meta,
-  .lecture-grid,
-  .lecture-card__meta {
+  .lecture-grid {
     grid-template-columns: 1fr;
   }
 

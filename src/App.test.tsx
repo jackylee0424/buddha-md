@@ -13,7 +13,12 @@ describe('App', () => {
     expect(screen.getByText(/前二十七講全文頁面/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '繁體中文', pressed: true })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'English', pressed: false })).toBeInTheDocument();
-    expect(screen.getAllByRole('link', { name: '閱讀全文' })).toHaveLength(27);
+    expect(screen.getByRole('heading', { name: /第 01 講.*以經解心，以行證義/, level: 3 })).toBeInTheDocument();
+    expect(screen.getAllByRole('link', { name: /^閱讀 / })).toHaveLength(27);
+    expect(screen.queryByRole('link', { name: '閱讀全文' })).not.toBeInTheDocument();
+    expect(screen.queryByText('已上線全文')).not.toBeInTheDocument();
+    expect(screen.queryByText('段落數')).not.toBeInTheDocument();
+    expect(screen.queryByText('字數')).not.toBeInTheDocument();
   });
 
   it('toggles the website chrome into English', () => {
@@ -25,6 +30,12 @@ describe('App', () => {
     expect(screen.getByText(/Lecture pages and English rollout/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'English', pressed: true })).toBeInTheDocument();
     expect(screen.getByText(/Li Ruilie Diamond Sutra lecture playlist/)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Session 01.*Why the sutra matters/, level: 3 })).toBeInTheDocument();
+    expect(screen.getAllByRole('link', { name: /^Read / })).toHaveLength(27);
+    expect(screen.queryByRole('link', { name: 'Read lecture page' })).not.toBeInTheDocument();
+    expect(screen.queryByText('Full text live')).not.toBeInTheDocument();
+    expect(screen.queryByText('Paragraph count')).not.toBeInTheDocument();
+    expect(screen.queryByText('Character count')).not.toBeInTheDocument();
   });
 
   it('opens a full lecture page for lecture 1', async () => {

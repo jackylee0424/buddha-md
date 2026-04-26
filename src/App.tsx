@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { archiveStats, localizedContent, type Locale } from './data/siteData';
+import { localizedContent, type Locale } from './data/siteData';
 import { availableLectureIds, lecturePageLocales, lecturePages } from './data/lecturePages';
 import './styles.css';
 
@@ -8,10 +8,6 @@ type Route =
   | { view: 'lecture'; lectureId: number };
 
 const localeOrder: Locale[] = ['zh-Hant', 'en'];
-const numberFormatters: Record<Locale, Intl.NumberFormat> = {
-  'zh-Hant': new Intl.NumberFormat('zh-Hant-TW'),
-  en: new Intl.NumberFormat('en-US')
-};
 
 function parseRoute(hash: string): Route {
   const cleaned = hash.replace(/^#/, '').replace(/\/$/, '');
@@ -34,7 +30,6 @@ function App() {
 
   const content = localizedContent[locale];
   const lectureChrome = lecturePageLocales[locale];
-  const formatter = numberFormatters[locale];
   const lecture = route.view === 'lecture' ? lecturePages[route.lectureId] : undefined;
   const lectureIsAvailable = Boolean(lecture && availableLectureIds.includes(lecture.id as (typeof availableLectureIds)[number]));
   const lectureHasEnglish = Boolean(lecture?.enTitle && lecture?.enSummary && lecture?.enFull?.length);
@@ -125,23 +120,6 @@ function App() {
         <p className="hero__subtitle">{content.subtitle}</p>
         <p className="hero__description">{content.description}</p>
 
-        <div className="hero__meta">
-          <div>
-            <span>{content.statsLabels.sessions}</span>
-            <strong>
-              {archiveStats.sessions} {content.statsUnits.sessions}
-            </strong>
-          </div>
-          <div>
-            <span>{content.statsLabels.paragraphs}</span>
-            <strong>{formatter.format(archiveStats.totalParagraphs)}</strong>
-          </div>
-          <div>
-            <span>{content.statsLabels.chars}</span>
-            <strong>{formatter.format(archiveStats.totalChars)}</strong>
-          </div>
-        </div>
-
         <a className="hero__source" href={content.sourceUrl} target="_blank" rel="noreferrer">
           {content.sourceLabel}
         </a>
@@ -191,35 +169,28 @@ function App() {
                 <div className="lecture-card__header">
                   <div>
                     <p className="lecture-card__eyebrow">{content.sessionDetailEyebrow}</p>
-                    <h3>{session.title}</h3>
+                    <h3 className="lecture-card__title">
+                      <span>{session.title}</span>
+                      <span className="lecture-card__title-separator" aria-hidden="true">
+                        {' '}·{' '}
+                      </span>
+                      <span className="lecture-card__title-focus">{session.focus}</span>
+                    </h3>
                   </div>
-                  <span className={session.isAvailable ? 'lecture-card__status lecture-card__status--ready' : 'lecture-card__status'}>
-                    {session.isAvailable ? lectureChrome.availableLabel : lectureChrome.pendingLabel}
-                  </span>
+                  {session.isAvailable ? (
+                    <a
+                      className="lecture-card__link lecture-card__link--header"
+                      href={formatLectureHash(session.id)}
+                      aria-label={`${lectureChrome.readFullText} ${session.title} ${session.focus}`}
+                    >
+                      {lectureChrome.readFullText}
+                    </a>
+                  ) : (
+                    <span className="lecture-card__status">{lectureChrome.pendingLabel}</span>
+                  )}
                 </div>
 
                 <p className="lecture-card__summary">{session.cardText}</p>
-
-                <dl className="session-detail__meta lecture-card__meta">
-                  <div>
-                    <dt>{content.sessionMetaLabels.paragraphCount}</dt>
-                    <dd>{formatter.format(session.paragraphCount)}</dd>
-                  </div>
-                  <div>
-                    <dt>{content.sessionMetaLabels.charCount}</dt>
-                    <dd>{formatter.format(session.charCount)}</dd>
-                  </div>
-                  <div>
-                    <dt>{content.sessionMetaLabels.focus}</dt>
-                    <dd>{session.focus}</dd>
-                  </div>
-                </dl>
-
-                {session.isAvailable ? (
-                  <a className="lecture-card__link" href={formatLectureHash(session.id)}>
-                    {lectureChrome.readFullText}
-                  </a>
-                ) : null}
               </article>
             ))}
           </div>

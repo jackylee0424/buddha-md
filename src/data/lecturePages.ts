@@ -945,9 +945,8 @@ export const lecturePageLocales = {
     archiveHeading: '前二十七講全文頁面',
     archiveDescription:
       '以下二十七講已依原始逐字稿進行編排與語句潤飾，保留講說脈絡，方便先行檢視專頁效果。',
-    availableLabel: '已上線全文',
     pendingLabel: '後續整理中',
-    readFullText: '閱讀全文',
+    readFullText: '閱讀',
     fullTextReady: '可讀全文',
     backToIndex: '返回首頁總覽',
     sourceLabel: '原始來源：逐字稿整理稿',
@@ -962,9 +961,8 @@ export const lecturePageLocales = {
     archiveHeading: 'Lecture pages and English rollout',
     archiveDescription:
       'All twenty-seven lectures are available as polished Traditional Chinese pages, and lectures 01–03 now also have full English versions.',
-    availableLabel: 'Full text live',
     pendingLabel: 'Coming next',
-    readFullText: 'Read lecture page',
+    readFullText: 'Read',
     fullTextReady: 'Traditional Chinese ready',
     fullTextReadyEnglish: 'English full text ready',
     backToIndex: 'Back to archive index',
@@ -981,7 +979,6 @@ export const lecturePageLocales = {
   archiveKicker: string;
   archiveHeading: string;
   archiveDescription: string;
-  availableLabel: string;
   pendingLabel: string;
   readFullText: string;
   fullTextReady: string;
