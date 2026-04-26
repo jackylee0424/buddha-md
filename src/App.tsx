@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { archiveStats, localizedContent, type Locale } from './data/siteData';
+import { availableLectureIds, lecturePageLocales, lecturePages } from './data/lecturePages';
 import './styles.css';
+
+type Route =
+  | { view: 'home' }
+  | { view: 'lecture'; lectureId: number };
 
 const localeOrder: Locale[] = ['zh-Hant', 'en'];
 const numberFormatters: Record<Locale, Intl.NumberFormat> = {
@@ -8,29 +13,83 @@ const numberFormatters: Record<Locale, Intl.NumberFormat> = {
   en: new Intl.NumberFormat('en-US')
 };
 
+function parseRoute(hash: string): Route {
+  const cleaned = hash.replace(/^#/, '').replace(/\/$/, '');
+  const match = cleaned.match(/^\/lecture\/(\d{1,2})$/);
+
+  if (!match) {
+    return { view: 'home' };
+  }
+
+  return { view: 'lecture', lectureId: Number(match[1]) };
+}
+
+function formatLectureHash(lectureId: number) {
+  return `#/lecture/${lectureId}`;
+}
+
 function App() {
   const [locale, setLocale] = useState<Locale>('zh-Hant');
-  const [selectedSessionId, setSelectedSessionId] = useState<number>(1);
+  const [route, setRoute] = useState<Route>(() => parseRoute(window.location.hash));
 
   const content = localizedContent[locale];
-  const activeSession = useMemo(
-    () => content.sessions.find((session) => session.id === selectedSessionId) ?? content.sessions[0],
-    [content.sessions, selectedSessionId]
-  );
+  const lectureChrome = lecturePageLocales[locale];
   const formatter = numberFormatters[locale];
+  const lecture = route.view === 'lecture' ? lecturePages[route.lectureId] : undefined;
+  const lectureIsAvailable = Boolean(lecture && availableLectureIds.includes(lecture.id as (typeof availableLectureIds)[number]));
+
+  const sessionCards = useMemo(
+    () =>
+      content.sessions.map((session) => {
+        const page = lecturePages[session.id];
+        const isAvailable = availableLectureIds.includes(session.id as (typeof availableLectureIds)[number]);
+
+        return {
+          ...session,
+          cardText: locale === 'zh-Hant' && page ? page.zhSummary : session.excerpt,
+          isAvailable
+        };
+      }),
+    [content.sessions, locale]
+  );
 
   useEffect(() => {
-    document.documentElement.lang = content.htmlLang;
+    const onHashChange = () => setRoute(parseRoute(window.location.hash));
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = route.view === 'lecture' ? 'zh-Hant' : content.htmlLang;
+
+    if (route.view === 'lecture') {
+      const pageTitle = lecture ? `${lecture.zhTitle} · 金剛經講記` : `講次整理中 · 金剛經講記`;
+      document.title = pageTitle;
+      const descriptionTag = document.querySelector('meta[name="description"]');
+      if (descriptionTag) {
+        descriptionTag.setAttribute(
+          'content',
+          lecture
+            ? lecture.zhSummary
+            : '前三講繁體中文全文頁面已上線，其餘講次將依序整理。'
+        );
+      }
+      return;
+    }
+
     document.title = content.title;
     const descriptionTag = document.querySelector('meta[name="description"]');
     if (descriptionTag) {
       descriptionTag.setAttribute('content', content.description);
     }
-  }, [content]);
+  }, [content, lecture, route.view]);
 
-  return (
-    <div className="app-shell">
-      <div className="ink-overlay" aria-hidden="true" />
+  const goHome = () => {
+    window.location.hash = '';
+  };
+
+  const renderHome = () => (
+    <>
       <header className="hero scroll-panel">
         <div className="hero__toolbar">
           <p className="hero__kicker">{content.heroKicker}</p>
@@ -110,48 +169,117 @@ function App() {
 
         <section className="scroll-panel section-card section-card--sessions">
           <div className="section-heading">
-            <span className="section-heading__eyebrow">{content.sessionsEyebrow}</span>
-            <h2>{content.sessionsHeading}</h2>
+            <span className="section-heading__eyebrow">{lectureChrome.archiveKicker}</span>
+            <h2>{lectureChrome.archiveHeading}</h2>
+            <p className="section-heading__description">{lectureChrome.archiveDescription}</p>
           </div>
 
-          <div className="sessions-layout">
-            <div className="session-selector" role="list" aria-label={content.sessionsListLabel}>
-              {content.sessions.map((session) => (
-                <button
-                  key={session.id}
-                  type="button"
-                  className={session.id === activeSession.id ? 'session-chip session-chip--active' : 'session-chip'}
-                  onClick={() => setSelectedSessionId(session.id)}
-                >
-                  {session.title}
-                </button>
-              ))}
-            </div>
+          <div className="lecture-grid" role="list" aria-label={content.sessionsListLabel}>
+            {sessionCards.map((session) => (
+              <article key={session.id} className="lecture-card" role="listitem">
+                <div className="lecture-card__header">
+                  <div>
+                    <p className="lecture-card__eyebrow">{content.sessionDetailEyebrow}</p>
+                    <h3>{session.title}</h3>
+                  </div>
+                  <span className={session.isAvailable ? 'lecture-card__status lecture-card__status--ready' : 'lecture-card__status'}>
+                    {session.isAvailable ? lectureChrome.availableLabel : lectureChrome.pendingLabel}
+                  </span>
+                </div>
 
-            <article className="session-detail">
-              <div className="session-detail__header">
-                <p className="session-detail__eyebrow">{content.sessionDetailEyebrow}</p>
-                <h3>{activeSession.title}</h3>
-              </div>
-              <p className="session-detail__excerpt">{activeSession.excerpt}</p>
-              <dl className="session-detail__meta">
-                <div>
-                  <dt>{content.sessionMetaLabels.paragraphCount}</dt>
-                  <dd>{formatter.format(activeSession.paragraphCount)}</dd>
-                </div>
-                <div>
-                  <dt>{content.sessionMetaLabels.charCount}</dt>
-                  <dd>{formatter.format(activeSession.charCount)}</dd>
-                </div>
-                <div>
-                  <dt>{content.sessionMetaLabels.focus}</dt>
-                  <dd>{activeSession.focus}</dd>
-                </div>
-              </dl>
-            </article>
+                <p className="lecture-card__summary">{session.cardText}</p>
+
+                <dl className="session-detail__meta lecture-card__meta">
+                  <div>
+                    <dt>{content.sessionMetaLabels.paragraphCount}</dt>
+                    <dd>{formatter.format(session.paragraphCount)}</dd>
+                  </div>
+                  <div>
+                    <dt>{content.sessionMetaLabels.charCount}</dt>
+                    <dd>{formatter.format(session.charCount)}</dd>
+                  </div>
+                  <div>
+                    <dt>{content.sessionMetaLabels.focus}</dt>
+                    <dd>{session.focus}</dd>
+                  </div>
+                </dl>
+
+                {session.isAvailable ? (
+                  <a className="lecture-card__link" href={formatLectureHash(session.id)}>
+                    {lectureChrome.readFullText}
+                  </a>
+                ) : null}
+              </article>
+            ))}
           </div>
         </section>
       </main>
+    </>
+  );
+
+  const renderLecture = () => (
+    <main className="content-grid content-grid--detail">
+      <section className="scroll-panel detail-hero">
+        <div className="hero__toolbar hero__toolbar--detail">
+          <p className="hero__kicker">{lectureChrome.readingLabel}</p>
+          <div className="language-toggle" role="group" aria-label={content.languageToggleLabel}>
+            {localeOrder.map((nextLocale) => (
+              <button
+                key={nextLocale}
+                type="button"
+                className={nextLocale === locale ? 'language-toggle__button language-toggle__button--active' : 'language-toggle__button'}
+                aria-pressed={nextLocale === locale}
+                onClick={() => setLocale(nextLocale)}
+              >
+                {content.languages[nextLocale]}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <p className="detail-note">{lectureChrome.chromeNote}</p>
+        <h1 className="hero__title hero__title--han">{lecture ? lecture.zhTitle : lectureChrome.unavailableTitle}</h1>
+        <p className="hero__description">{lecture ? lecture.zhSummary : lectureChrome.unavailableBody}</p>
+
+        <div className="detail-actions">
+          <button type="button" className="detail-link detail-link--button" onClick={goHome}>
+            {lectureChrome.backToIndex}
+          </button>
+          <span className="detail-source">{lectureChrome.sourceLabel}</span>
+        </div>
+      </section>
+
+      {lectureIsAvailable && lecture ? (
+        <article className="scroll-panel section-card lecture-detail">
+          <div className="section-heading">
+            <span className="section-heading__eyebrow">{lectureChrome.fullTextReady}</span>
+            <h2>{lecture.zhTitle}</h2>
+          </div>
+          <div className="lecture-detail__body">
+            {lecture.zhFull.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </article>
+      ) : (
+        <section className="scroll-panel section-card lecture-unavailable">
+          <div className="section-heading">
+            <span className="section-heading__eyebrow">{lectureChrome.pendingLabel}</span>
+            <h2>{lectureChrome.unavailableTitle}</h2>
+          </div>
+          <p>{lectureChrome.unavailableBody}</p>
+          <button type="button" className="detail-link detail-link--button" onClick={goHome}>
+            {lectureChrome.unavailableAction}
+          </button>
+        </section>
+      )}
+    </main>
+  );
+
+  return (
+    <div className="app-shell">
+      <div className="ink-overlay" aria-hidden="true" />
+      {route.view === 'lecture' ? renderLecture() : renderHome()}
     </div>
   );
 }
