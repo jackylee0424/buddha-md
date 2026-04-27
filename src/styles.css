@@ -269,6 +269,51 @@ button {
     #1a0f08;
 }
 
+.section-card--sutra {
+  background:
+    linear-gradient(180deg, rgba(78, 44, 18, 0.92) 0%, rgba(24, 14, 8, 0.96) 100%),
+    #1b1009;
+}
+
+.sutra-home__content {
+  display: grid;
+  gap: 20px;
+}
+
+.sutra-home__preview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.sutra-home__preview-card {
+  padding: 22px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(120, 75, 30, 0.14), rgba(21, 10, 4, 0.22));
+  border: 1px solid rgba(223, 184, 106, 0.18);
+}
+
+.sutra-home__preview-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+}
+
+.sutra-home__preview-card p {
+  margin: 0;
+  color: rgba(247, 233, 199, 0.9);
+}
+
+.sutra-home__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.sutra-home__source {
+  margin-top: 0;
+}
+
 .sessions-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.95fr);
@@ -444,9 +489,28 @@ button {
 }
 
 .lecture-detail__body p,
-.lecture-unavailable p {
+.lecture-unavailable p,
+.sutra-section p,
+.sutra-home__preview-card p {
   margin: 0;
   color: rgba(247, 233, 199, 0.92);
+}
+
+.section-heading--compact {
+  margin-bottom: 18px;
+}
+
+.sutra-detail__body {
+  gap: 16px;
+}
+
+.sutra-sections {
+  gap: 30px;
+}
+
+.sutra-section {
+  padding-top: 8px;
+  border-top: 1px solid rgba(223, 184, 106, 0.14);
 }
 
 @media (max-width: 900px) {
@@ -457,7 +521,8 @@ button {
   }
 
   .teaching-grid,
-  .lecture-grid {
+  .lecture-grid,
+  .sutra-home__preview {
     grid-template-columns: 1fr;
   }
 

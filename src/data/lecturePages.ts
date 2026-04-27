@@ -629,7 +629,7 @@ export const lecturePages: Record<number, LecturePage> = {
   },
   19: {
     id: 19,
-    zhTitle: '空空之義、無所得心與離相學道',
+    zhTitle: '金剛經講說之十九：空空之義、無所得心與離相學道',
     zhSummary:
       '本講圍繞《金剛經》中「實無有法發阿耨多羅三藐三菩提心」而展開，先說明何謂「空」，又進一步指出連對空的執著也必須放下，這才叫做「空空」。講中並以看破名利、燃燈佛授記、無所得而得菩提等義，提醒修道人不可著相，也不可著空，更不可把佛法變成新的執著。',
     zhFull: [
@@ -662,7 +662,7 @@ export const lecturePages: Record<number, LecturePage> = {
   },
   20: {
     id: 20,
-    zhTitle: '四依、了義與不了義、大身非身',
+    zhTitle: '金剛經講說之二十：四依、了義與不了義、大身非身',
     zhSummary:
       '本講承接前文，重點講解《涅槃經》所說四依：依法不依人、依義不依字、依智不依識、依了義經不依不了義經。講者反覆提醒，讀經若執文字，修行若憑情識，就容易落入偏差；唯有把握中道實義、分辨方便與真實，才能不被表象所惑。後半並談「大身非身」，說明真大不在色身高大，而在法身與心量廣大。',
     zhFull: [
@@ -697,7 +697,7 @@ export const lecturePages: Record<number, LecturePage> = {
   },
   21: {
     id: 21,
-    zhTitle: '莊嚴佛土、五眼與恆河沙心念',
+    zhTitle: '金剛經講說之二十一：莊嚴佛土、五眼與恆河沙心念',
     zhSummary:
       '本講從《金剛經》「莊嚴佛土」與「通達無我法者」說起，指出真正的佛土不是外在寺院，而是自心清淨；真正的菩薩行，不在執著功德名相，而在定慧莊嚴內在佛土。講中並進一步說明佛與眾生同體、五眼層次，以及恆河沙喻眾生妄念無量，勸人從破妄入手，返照本性。',
     zhFull: [
@@ -731,7 +731,7 @@ export const lecturePages: Record<number, LecturePage> = {
   },
   22: {
     id: 22,
-    zhTitle: '佛土在心、三心不可得與離相之福',
+    zhTitle: '金剛經講說之二十二：佛土在心、三心不可得與離相之福',
     zhSummary:
       '本講先從佛土與眾生佛性的關係說起，指出真佛不在心外，眾生若悟自性即是佛；繼而詳解種種妄心與「過去心不可得、現在心不可得、未來心不可得」的義理，並透過禪宗公案說明無住之心。後半又轉入無相布施、離相福德，以及不可執色身而見如來，強調修行重在去妄顯真，而不在外相求取。',
     zhFull: [
@@ -764,7 +764,7 @@ export const lecturePages: Record<number, LecturePage> = {
   },
   23: {
     id: 23,
-    zhTitle: '正法眼藏、無情說法與無法可得',
+    zhTitle: '金剛經講說之二十三：正法眼藏、無情說法與無法可得',
     zhSummary:
       '本講圍繞拈花示眾與正法眼藏展開，說明佛法不只是語言文字的傳授，更重在以心印心、體悟自性。其後詳論無情說法、如來無有定法可說，以及說法若落入有所得便成誹謗。後半並談《金剛經》版本增補、眾生佛性與無法可得，最後歸結到淨心行善、離法縛而修善法。',
     zhFull: [
@@ -797,7 +797,7 @@ export const lecturePages: Record<number, LecturePage> = {
   },
   24: {
     id: 24,
-    zhTitle: '法平等無高下、無我度生與離相見佛',
+    zhTitle: '金剛經講說之二十四：法平等無高下、無我度生與離相見佛',
     zhSummary:
       '本講先解釋阿耨多羅三藐三菩提之法平等無高下，並分辨世間福智與出世間福智的不同；其後再以須彌山七寶布施與受持經義相比，說明無住說法與實修般若的殊勝。後半重點轉入「實無眾生得滅度者」、如來不作度生之念，以及不可執三十二相見如來，總結出佛法在於平等、離相、無我與返見自性。',
     zhFull: [
@@ -830,7 +830,7 @@ export const lecturePages: Record<number, LecturePage> = {
   },
   25: {
     id: 25,
-    zhTitle: '離相而不斷滅、三十二淨行與無我之忍',
+    zhTitle: '金剛經講說之二十五：離相而不斷滅、三十二淨行與無我之忍',
     zhSummary:
       '本講圍繞《金剛經》所說「無相」而展開，重點辨明無相並非斷滅一切相，而是於相離相、於空離空。講中引印光大師、呂純陽祖師、道濟禪師與惠能六祖之說，指出修行人不可執有，也不可執空；若將無相曲解為斷滅佛法，便失去中道。又進一步說明三十二淨行、五根修六波羅蜜、意根修無相無為，並解釋不受、不貪、無我之忍與法忍、生忍的義理，最後歸結於修行必須安住本心，不被順逆境與福德之念所繫。',
     zhFull: [
@@ -867,7 +867,7 @@ export const lecturePages: Record<number, LecturePage> = {
   },
   26: {
     id: 26,
-    zhTitle: '如來無來去、一合相不可說',
+    zhTitle: '金剛經講說之二十六：如來無來去、一合相不可說',
     zhSummary:
       '本講先從「如來者，無所從來，亦無所去」發揮，說明佛性不是以行住坐臥等威儀相來界定，歷代寒山、拾得、濟公、布袋和尚等示現，也都顯示真佛無一定形貌。接著進入《金剛經》「一合相」與「微塵」之義，指出三千大千世界乃借喻眾生身心與妄念，真性本無相、不可執著、不可言說。講中綜合呂純陽祖師、惠能六祖及儒道典籍，強調本性只能自悟、自修、自見，不可依賴他力，不可著名相，更不可落入文字分別。',
     zhFull: [
@@ -906,7 +906,7 @@ export const lecturePages: Record<number, LecturePage> = {
   },
   27: {
     id: 27,
-    zhTitle: '不取於相、如如不動與信受奉行',
+    zhTitle: '金剛經講說之二十七：不取於相、如如不動與信受奉行',
     zhSummary:
       '本講最後收束《金剛經》的篇末義理，說明真實法相乃不生法相、無相之相，不可執著寺廟、儀式、文字等外在形式。其後闡明受持四句偈、為人演說之福德，勝過無量七寶布施，因關鍵在於悟透本心、無所得、如如不動。末段又解釋「一切有為法，如夢幻泡影」，並總說諸經結尾的「信受奉行」，強調讀經須依法不依人、依義不依字、依智不依識、依了義經不依不了義經，真正把般若義理落實於修行與生命之中。',
     zhFull: [
@@ -960,7 +960,7 @@ export const lecturePageLocales = {
     archiveKicker: 'Transcript-based rollout',
     archiveHeading: 'Lecture pages and English rollout',
     archiveDescription:
-      'All twenty-seven lectures are available as polished Traditional Chinese pages, and lectures 01–03 now also have full English versions.',
+      'All twenty-seven lectures are available as polished Traditional Chinese pages, and all twenty-seven now also have full English versions.',
     pendingLabel: 'Coming next',
     readFullText: 'Read',
     fullTextReady: 'Traditional Chinese ready',
@@ -970,7 +970,7 @@ export const lecturePageLocales = {
     readingLabel: 'Full text',
     unavailableTitle: 'This lecture page is still being prepared',
     unavailableBody:
-      'English full-text pages are currently available for lectures 01–03; all 27 lectures remain available in Traditional Chinese.',
+      'All twenty-seven lectures now have full English pages, while Traditional Chinese remains the default reading mode for the archive.',
     unavailableAction: 'Back to index',
     chromeNote: 'This lecture currently falls back to its Traditional Chinese full-text page.',
     chromeNoteReady: 'This lecture now has a full English page.'

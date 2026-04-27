@@ -1,17 +1,23 @@
 import { useEffect, useMemo, useState } from 'react';
 import { localizedContent, type Locale } from './data/siteData';
 import { availableLectureIds, lecturePageLocales, lecturePages } from './data/lecturePages';
+import { sutraPageContent, sutraSections } from './data/sutraText';
 import './styles.css';
 
 type Route =
   | { view: 'home' }
-  | { view: 'lecture'; lectureId: number };
+  | { view: 'lecture'; lectureId: number }
+  | { view: 'sutra' };
 
 const localeOrder: Locale[] = ['zh-Hant', 'en'];
 
 function parseRoute(hash: string): Route {
   const cleaned = hash.replace(/^#/, '').replace(/\/$/, '');
   const match = cleaned.match(/^\/lecture\/(\d{1,2})$/);
+
+  if (cleaned === '/sutra') {
+    return { view: 'sutra' };
+  }
 
   if (!match) {
     return { view: 'home' };
@@ -24,12 +30,22 @@ function formatLectureHash(lectureId: number) {
   return `#/lecture/${lectureId}`;
 }
 
+function formatSutraHash() {
+  return '#/sutra';
+}
+
 function App() {
   const [locale, setLocale] = useState<Locale>('zh-Hant');
   const [route, setRoute] = useState<Route>(() => parseRoute(window.location.hash));
 
   const content = localizedContent[locale];
   const lectureChrome = lecturePageLocales[locale];
+  const sutraChrome = sutraPageContent[locale];
+  const sutraSectionsForLocale = sutraSections.map((section) => ({
+    id: section.id,
+    title: locale === 'en' ? section.enTitle : section.zhTitle,
+    paragraphs: locale === 'en' ? section.enParagraphs : section.zhParagraphs,
+  }));
   const lecture = route.view === 'lecture' ? lecturePages[route.lectureId] : undefined;
   const lectureIsAvailable = Boolean(lecture && availableLectureIds.includes(lecture.id as (typeof availableLectureIds)[number]));
   const lectureHasEnglish = Boolean(lecture?.enTitle && lecture?.enSummary && lecture?.enFull?.length);
@@ -42,9 +58,16 @@ function App() {
       content.sessions.map((session) => {
         const page = lecturePages[session.id];
         const isAvailable = availableLectureIds.includes(session.id as (typeof availableLectureIds)[number]);
+        const cardTitle =
+          locale === 'zh-Hant' && page?.zhTitle
+            ? page.zhTitle
+            : locale === 'en' && page?.enTitle
+              ? page.enTitle
+              : session.title;
 
         return {
           ...session,
+          cardTitle,
           cardText:
             locale === 'zh-Hant' && page
               ? page.zhSummary
@@ -76,9 +99,19 @@ function App() {
           lecture
             ? lectureSummary
             : locale === 'en'
-              ? 'English full-text pages are currently available for lectures 01–03; all 27 lectures remain available in Traditional Chinese.'
+              ? 'All twenty-seven lectures now have full English pages, while Traditional Chinese remains the default reading mode for the archive.'
               : '目前已先完成第 01 至 27 講的繁體中文全文頁面。'
         );
+      }
+      return;
+    }
+
+    if (route.view === 'sutra') {
+      document.documentElement.lang = locale === 'en' ? 'en' : 'zh-Hant';
+      document.title = `${sutraChrome.pageTitle} · 金剛經講記`;
+      const descriptionTag = document.querySelector('meta[name="description"]');
+      if (descriptionTag) {
+        descriptionTag.setAttribute('content', sutraChrome.pageDescription);
       }
       return;
     }
@@ -88,7 +121,7 @@ function App() {
     if (descriptionTag) {
       descriptionTag.setAttribute('content', content.description);
     }
-  }, [content, lecture, lectureHasEnglish, lectureSummary, lectureTitle, locale, route.view]);
+  }, [content, lecture, lectureHasEnglish, lectureSummary, lectureTitle, locale, route.view, sutraChrome.pageDescription, sutraChrome.pageTitle]);
 
   const goHome = () => {
     window.location.hash = '';
@@ -156,6 +189,32 @@ function App() {
           </ol>
         </section>
 
+        <section className="scroll-panel section-card section-card--sutra">
+          <div className="section-heading">
+            <span className="section-heading__eyebrow">{sutraChrome.homeEyebrow}</span>
+            <h2>{sutraChrome.homeHeading}</h2>
+            <p className="section-heading__description">{sutraChrome.homeDescription}</p>
+          </div>
+          <div className="sutra-home__content">
+            <div className="sutra-home__preview">
+              {sutraSections.slice(0, 2).map((section) => (
+                <article key={section.id} className="sutra-home__preview-card">
+                  <h3>{locale === 'en' ? section.enTitle : section.zhTitle}</h3>
+                  <p>{locale === 'en' ? section.enParagraphs[0] : section.zhParagraphs[0]}</p>
+                </article>
+              ))}
+            </div>
+            <div className="sutra-home__actions">
+              <a className="detail-link" href={formatSutraHash()}>
+                {sutraChrome.ctaLabel}
+              </a>
+              <a className="hero__source sutra-home__source" href={sutraChrome.sourceUrl} target="_blank" rel="noreferrer">
+                {sutraChrome.sourceLabel}
+              </a>
+            </div>
+          </div>
+        </section>
+
         <section className="scroll-panel section-card section-card--sessions">
           <div className="section-heading">
             <span className="section-heading__eyebrow">{lectureChrome.archiveKicker}</span>
@@ -169,19 +228,13 @@ function App() {
                 <div className="lecture-card__header">
                   <div>
                     <p className="lecture-card__eyebrow">{content.sessionDetailEyebrow}</p>
-                    <h3 className="lecture-card__title">
-                      <span>{session.title}</span>
-                      <span className="lecture-card__title-separator" aria-hidden="true">
-                        {' '}·{' '}
-                      </span>
-                      <span className="lecture-card__title-focus">{session.focus}</span>
-                    </h3>
+                    <h3 className="lecture-card__title">{session.cardTitle}</h3>
                   </div>
                   {session.isAvailable ? (
                     <a
                       className="lecture-card__link lecture-card__link--header"
                       href={formatLectureHash(session.id)}
-                      aria-label={`${lectureChrome.readFullText} ${session.title} ${session.focus}`}
+                      aria-label={`${lectureChrome.readFullText} ${session.cardTitle}`}
                     >
                       {lectureChrome.readFullText}
                     </a>
@@ -197,6 +250,72 @@ function App() {
         </section>
       </main>
     </>
+  );
+
+  const renderSutra = () => (
+    <main className="content-grid content-grid--detail">
+      <section className="scroll-panel detail-hero">
+        <div className="hero__toolbar hero__toolbar--detail">
+          <p className="hero__kicker">{sutraChrome.pageEyebrow}</p>
+          <div className="language-toggle" role="group" aria-label={content.languageToggleLabel}>
+            {localeOrder.map((nextLocale) => (
+              <button
+                key={nextLocale}
+                type="button"
+                className={nextLocale === locale ? 'language-toggle__button language-toggle__button--active' : 'language-toggle__button'}
+                aria-pressed={nextLocale === locale}
+                onClick={() => setLocale(nextLocale)}
+              >
+                {content.languages[nextLocale]}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <p className="detail-note">{sutraChrome.sourceLabel}</p>
+        <h1 className={locale === 'en' ? 'hero__title hero__title--latin' : 'hero__title hero__title--han'}>{sutraChrome.pageTitle}</h1>
+        <p className="hero__description">{sutraChrome.pageDescription}</p>
+
+        <div className="detail-actions">
+          <button type="button" className="detail-link detail-link--button" onClick={goHome}>
+            {lectureChrome.backToIndex}
+          </button>
+          <a className="detail-link" href={sutraChrome.sourceUrl} target="_blank" rel="noreferrer">
+            {sutraChrome.sourceLabel}
+          </a>
+        </div>
+      </section>
+
+      <article className="scroll-panel section-card lecture-detail sutra-detail">
+        <div className="section-heading">
+          <span className="section-heading__eyebrow">{sutraChrome.introTitle}</span>
+          <h2>{sutraChrome.pageTitle}</h2>
+        </div>
+        <div className="lecture-detail__body sutra-detail__body">
+          {sutraChrome.introParagraphs.map((paragraph, index) => (
+            <p key={`sutra-intro-${index}`}>{paragraph}</p>
+          ))}
+        </div>
+      </article>
+
+      <article className="scroll-panel section-card lecture-detail sutra-detail">
+        <div className="lecture-detail__body sutra-sections">
+          {sutraSectionsForLocale.map((section) => (
+            <section key={section.id} className="sutra-section">
+              <div className="section-heading section-heading--compact">
+                <span className="section-heading__eyebrow">{locale === 'en' ? `Section ${section.id}` : `第 ${String(section.id).padStart(2, '0')} 段`}</span>
+                <h2>{section.title}</h2>
+              </div>
+              <div className="lecture-detail__body sutra-detail__body">
+                {section.paragraphs.map((paragraph, paragraphIndex) => (
+                  <p key={`sutra-${section.id}-${paragraphIndex}`}>{paragraph}</p>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </article>
+    </main>
   );
 
   const renderLecture = () => (
@@ -261,7 +380,7 @@ function App() {
   return (
     <div className="app-shell">
       <div className="ink-overlay" aria-hidden="true" />
-      {route.view === 'lecture' ? renderLecture() : renderHome()}
+      {route.view === 'lecture' ? renderLecture() : route.view === 'sutra' ? renderSutra() : renderHome()}
     </div>
   );
 }

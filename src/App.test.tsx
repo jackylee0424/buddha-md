@@ -11,10 +11,13 @@ describe('App', () => {
 
     expect(screen.getByRole('heading', { name: '金剛經講記', level: 1 })).toBeInTheDocument();
     expect(screen.getByText(/前二十七講全文頁面/)).toBeInTheDocument();
+    expect(screen.getByText(/金剛經原文/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '繁體中文', pressed: true })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'English', pressed: false })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /第 01 講.*以經解心，以行證義/, level: 3 })).toBeInTheDocument();
-    expect(screen.getAllByRole('link', { name: /^閱讀 / })).toHaveLength(27);
+    expect(screen.getByRole('heading', { name: '金剛經講說之一：經題義理與修行根本', level: 3 })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '金剛經講說之二十七：不取於相、如如不動與信受奉行', level: 3 })).toBeInTheDocument();
+    expect(screen.getAllByText('閱讀')).toHaveLength(27);
+    expect(screen.getByRole('link', { name: '閱讀經文原文' })).toBeInTheDocument();
     expect(screen.queryByRole('link', { name: '閱讀全文' })).not.toBeInTheDocument();
     expect(screen.queryByText('已上線全文')).not.toBeInTheDocument();
     expect(screen.queryByText('段落數')).not.toBeInTheDocument();
@@ -28,10 +31,18 @@ describe('App', () => {
 
     expect(screen.getByRole('heading', { name: 'Diamond Sutra Lecture Archive', level: 1 })).toBeInTheDocument();
     expect(screen.getByText(/Lecture pages and English rollout/)).toBeInTheDocument();
+    expect(screen.getByText(/all twenty-seven now also have full English versions/i)).toBeInTheDocument();
+    expect(screen.getByText(/The Diamond Sutra: full text/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'English', pressed: true })).toBeInTheDocument();
     expect(screen.getByText(/Li Ruilie Diamond Sutra lecture playlist/)).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /Session 01.*Why the sutra matters/, level: 3 })).toBeInTheDocument();
-    expect(screen.getAllByRole('link', { name: /^Read / })).toHaveLength(27);
+    expect(
+      screen.getByRole('heading', {
+        name: 'Diamond Sutra Lecture 1: The Meaning of the Title and the Foundations of Practice',
+        level: 3
+      })
+    ).toBeInTheDocument();
+    expect(screen.getAllByText('Read')).toHaveLength(27);
+    expect(screen.getByRole('link', { name: 'Read the sutra text' })).toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'Read lecture page' })).not.toBeInTheDocument();
     expect(screen.queryByText('Full text live')).not.toBeInTheDocument();
     expect(screen.queryByText('Paragraph count')).not.toBeInTheDocument();
@@ -49,6 +60,17 @@ describe('App', () => {
     expect(screen.getByRole('button', { name: '返回首頁總覽' })).toBeInTheDocument();
   });
 
+  it('opens the traditional Chinese sutra text page', async () => {
+    window.location.hash = '#/sutra';
+    render(<App />);
+
+    expect(await screen.findByRole('heading', { name: '金剛經原文', level: 1 })).toBeInTheDocument();
+    expect(screen.getByText(/如是我聞。\s*一時，佛在舍衛國祇樹給孤獨園/)).toBeInTheDocument();
+    expect(screen.getByText(/若以色見我，以音聲求我，是人行邪道，不能見如來。/)).toBeInTheDocument();
+    expect(screen.queryByText(/Thus have I heard\. At one time the Buddha was in Śrāvastī/)).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '返回首頁總覽' })).toBeInTheDocument();
+  });
+
 
   it('shows the English lecture page for lecture 1 when English is selected', async () => {
     window.location.hash = '#/lecture/1';
@@ -61,6 +83,19 @@ describe('App', () => {
     ).toBeInTheDocument();
     expect(screen.getByText(/This lecture now has a full English page\./)).toBeInTheDocument();
     expect(screen.getByText(/This lecture begins with the title of the Vajra Prajna Paramita Sutra\./)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Back to archive index' })).toBeInTheDocument();
+  });
+
+  it('shows the English sutra text page when English is selected', async () => {
+    window.location.hash = '#/sutra';
+    render(<App />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'English' }));
+
+    expect(await screen.findByRole('heading', { name: 'The Diamond Sutra', level: 1 })).toBeInTheDocument();
+    expect(screen.getByText(/Thus have I heard\. At one time the Buddha was in Śrāvastī/)).toBeInTheDocument();
+    expect(screen.getByText(/All conditioned phenomena are like dreams, illusions, bubbles, shadows, like dew and like lightning/)).toBeInTheDocument();
+    expect(screen.queryByText(/如是我聞。\s*一時，佛在舍衛國祇樹給孤獨園/)).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Back to archive index' })).toBeInTheDocument();
   });
 });
