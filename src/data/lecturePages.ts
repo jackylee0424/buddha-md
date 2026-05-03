@@ -941,39 +941,39 @@ export const lecturePages: Record<number, LecturePage> = {
 
 export const lecturePageLocales = {
   'zh-Hant': {
-    archiveKicker: '原始講稿整理 · 首批講次',
-    archiveHeading: '前二十七講全文頁面',
+    archiveKicker: '講記典藏',
+    archiveHeading: '二十七講全文閱讀',
     archiveDescription:
-      '以下二十七講已依原始逐字稿進行編排與語句潤飾，保留講說脈絡，方便先行檢視專頁效果。',
+      '以下二十七講已整理為可直接閱讀的講記頁面，保留講說脈絡，方便逐講深入研讀。',
     pendingLabel: '後續整理中',
     readFullText: '閱讀',
     fullTextReady: '可讀全文',
     backToIndex: '返回首頁總覽',
-    sourceLabel: '原始來源：逐字稿整理稿',
+    sourceLabel: '講記全文',
     readingLabel: '全文閱讀',
     unavailableTitle: '本講全文頁面整理中',
-    unavailableBody: '目前已先完成第 01 至 27 講的繁體中文全文頁面。',
+    unavailableBody: '目前二十七講全文頁面皆已開放閱讀。',
     unavailableAction: '回到首頁',
-    chromeNote: '講次頁面目前優先提供繁體中文全文。'
+    chromeNote: '講次頁面提供繁體中文全文閱讀。'
   },
   en: {
-    archiveKicker: 'Transcript-based rollout',
-    archiveHeading: 'Lecture pages and English rollout',
+    archiveKicker: 'Lecture archive',
+    archiveHeading: 'Twenty-seven full lecture pages',
     archiveDescription:
-      'All twenty-seven lectures are available as polished Traditional Chinese pages, and all twenty-seven now also have full English versions.',
+      'All twenty-seven lectures are available as full reading pages in Traditional Chinese and English.',
     pendingLabel: 'Coming next',
     readFullText: 'Read',
     fullTextReady: 'Traditional Chinese ready',
     fullTextReadyEnglish: 'English full text ready',
     backToIndex: 'Back to archive index',
-    sourceLabel: 'Source: normalized transcript text',
+    sourceLabel: 'Lecture text',
     readingLabel: 'Full text',
     unavailableTitle: 'This lecture page is still being prepared',
     unavailableBody:
-      'All twenty-seven lectures now have full English pages, while Traditional Chinese remains the default reading mode for the archive.',
+      'All twenty-seven lecture pages are now open for reading.',
     unavailableAction: 'Back to index',
-    chromeNote: 'This lecture currently falls back to its Traditional Chinese full-text page.',
-    chromeNoteReady: 'This lecture now has a full English page.'
+    chromeNote: 'This lecture is available as a Traditional Chinese full-text page.',
+    chromeNoteReady: 'This lecture is available as a full English page.'
   }
 } satisfies Record<Locale, {
   archiveKicker: string;

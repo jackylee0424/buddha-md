@@ -99,8 +99,8 @@ function App() {
           lecture
             ? lectureSummary
             : locale === 'en'
-              ? 'All twenty-seven lectures now have full English pages, while Traditional Chinese remains the default reading mode for the archive.'
-              : '目前已先完成第 01 至 27 講的繁體中文全文頁面。'
+              ? 'All twenty-seven lecture pages are now open for reading.'
+              : '目前二十七講全文頁面皆已開放閱讀。'
         );
       }
       return;

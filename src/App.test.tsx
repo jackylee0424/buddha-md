@@ -10,7 +10,7 @@ describe('App', () => {
     render(<App />);
 
     expect(screen.getByRole('heading', { name: '金剛經講記', level: 1 })).toBeInTheDocument();
-    expect(screen.getByText(/前二十七講全文頁面/)).toBeInTheDocument();
+    expect(screen.getByText(/二十七講全文閱讀/)).toBeInTheDocument();
     expect(screen.getByText(/金剛經原文/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '繁體中文', pressed: true })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'English', pressed: false })).toBeInTheDocument();
@@ -30,8 +30,8 @@ describe('App', () => {
     fireEvent.click(screen.getByRole('button', { name: 'English' }));
 
     expect(screen.getByRole('heading', { name: 'Diamond Sutra Lecture Archive', level: 1 })).toBeInTheDocument();
-    expect(screen.getByText(/Lecture pages and English rollout/)).toBeInTheDocument();
-    expect(screen.getByText(/all twenty-seven now also have full English versions/i)).toBeInTheDocument();
+    expect(screen.getByText(/Twenty-seven full lecture pages/)).toBeInTheDocument();
+    expect(screen.getByText(/full reading pages in Traditional Chinese and English/i)).toBeInTheDocument();
     expect(screen.getByText(/The Diamond Sutra: full text/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'English', pressed: true })).toBeInTheDocument();
     expect(screen.getByText(/Li Ruilie Diamond Sutra lecture playlist/)).toBeInTheDocument();
@@ -81,7 +81,7 @@ describe('App', () => {
     expect(
       await screen.findByRole('heading', { name: 'Diamond Sutra Lecture 1: The Meaning of the Title and the Foundations of Practice', level: 1 })
     ).toBeInTheDocument();
-    expect(screen.getByText(/This lecture now has a full English page\./)).toBeInTheDocument();
+    expect(screen.getByText(/This lecture is available as a full English page\./)).toBeInTheDocument();
     expect(screen.getByText(/This lecture begins with the title of the Vajra Prajna Paramita Sutra\./)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Back to archive index' })).toBeInTheDocument();
   });
