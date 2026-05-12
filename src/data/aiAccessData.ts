@@ -14,12 +14,12 @@ export const aiAccessLocales: Record<Locale, {
   'zh-Hant': {
     eyebrow: 'AI / CLI Access',
     heading: '給 AI Agent 使用的原始素材入口',
-    description: '除了人類閱讀頁，本站也提供穩定的 manifest、llms.txt、公開倉庫原始文字檔與無第三方函式庫依賴的最小 CLI。代理程式只要安裝 CLI 並使用 --help，就能學會下載整部書的原始文字素材。',
+    description: '除了人類閱讀頁，本站也提供穩定的 manifest、llms.txt、原始文字檔與無第三方函式庫依賴的最小 CLI。代理程式只要安裝 CLI 並使用 --help，就能學會下載整部書的原始文字素材。',
     endpointHeading: '穩定端點',
     endpoints: [
       { label: 'llms.txt', href: '/llms.txt' },
       { label: 'manifest.json', href: '/manifest.json' },
-      { label: 'Tangjin manifest', href: 'https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/tangjin/manifest.json' },
+      { label: 'Tangjin manifest', href: '/materials/tangjin/manifest.json' },
       { label: 'CLI', href: '/cli' }
     ],
     copyInstruction: '點擊 Copy，即可把提示詞複製到剪貼簿，再貼給你的 AI agent。',
@@ -61,12 +61,12 @@ Steps:
   en: {
     eyebrow: 'AI / CLI Access',
     heading: 'Raw materials for AI agents',
-    description: 'In addition to the reading interface, buddha.md exposes stable manifests, llms.txt, public-repository raw text files, and a minimal CLI with no third-party library dependencies. Agents can install the CLI and use --help to learn how to download a complete raw-text book corpus.',
+    description: 'In addition to the reading interface, buddha.md exposes stable manifests, llms.txt, raw text files, and a minimal CLI with no third-party library dependencies. Agents can install the CLI and use --help to learn how to download a complete raw-text book corpus.',
     endpointHeading: 'Stable endpoints',
     endpoints: [
       { label: 'llms.txt', href: '/llms.txt' },
       { label: 'manifest.json', href: '/manifest.json' },
-      { label: 'Tangjin manifest', href: 'https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/tangjin/manifest.json' },
+      { label: 'Tangjin manifest', href: '/materials/tangjin/manifest.json' },
       { label: 'CLI', href: '/cli' }
     ],
     copyInstruction: 'Click Copy to put a ready-to-send prompt on your clipboard, then paste it into your AI agent.',

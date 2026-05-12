@@ -2,7 +2,7 @@
 set -eu
 
 SITE_URL="${BUDDHA_MD_BASE_URL:-https://buddha.md}"
-RAW_BASE_URL="${BUDDHA_MD_RAW_BASE_URL:-https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public}"
+RAW_BASE_URL="${BUDDHA_MD_RAW_BASE_URL:-$SITE_URL}"
 
 usage() {
   cat <<'USAGE'

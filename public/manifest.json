@@ -9,7 +9,7 @@
       "title": "金剛經 / Diamond Sutra",
       "lecture_count": 27,
       "language": "zh-Hant",
-      "manifest": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/manifest.json"
+      "manifest": "https://buddha.md/materials/diamond/manifest.json"
     },
     {
       "id": "tangjin",
@@ -17,9 +17,9 @@
       "description": "Use tangjin for the 103-lecture Platform Sutra transcript corpus.",
       "lecture_count": 103,
       "language": "zh-Hant",
-      "manifest": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/tangjin/manifest.json",
-      "bundle": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/bundles/tangjin-transcripts.jsonl",
-      "bundle_gzip": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/bundles/tangjin-transcripts.jsonl.gz"
+      "manifest": "https://buddha.md/materials/tangjin/manifest.json",
+      "bundle": "https://buddha.md/bundles/tangjin-transcripts.jsonl",
+      "bundle_gzip": "https://buddha.md/bundles/tangjin-transcripts.jsonl.gz"
     }
   ]
 }

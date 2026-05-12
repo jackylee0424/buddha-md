@@ -4,8 +4,8 @@ This site provides Buddhist source texts and lecture transcripts for human readi
 
 Machine-readable entry points:
 - Main manifest: https://buddha.md/manifest.json
-- Tangjin manifest: https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/tangjin/manifest.json
-- Diamond Sutra lecture manifest: https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/manifest.json
+- Tangjin manifest: https://buddha.md/materials/tangjin/manifest.json
+- Diamond Sutra lecture manifest: https://buddha.md/materials/diamond/manifest.json
 - Minimal CLI: https://buddha.md/cli
 
 Install the inspectable CLI:
@@ -18,7 +18,7 @@ Learn the commands from built-in help:
 ./buddha-md fetch tangjin --help
 ./buddha-md fetch diamond --help
 
-Raw text fetches are book-level only. Use the CLI help to choose the correct command for downloading a complete corpus into local files. The CLI keeps buddha.md small by downloading raw text files from this public repository snapshot.
+Raw text fetches are book-level only. Use the CLI help to choose the correct command for downloading a complete corpus into local files.
 
 Download the Tangjin JSONL bundle if needed:
 ./buddha-md bundle tangjin --out ./buddha-materials/tangjin-transcripts.jsonl
