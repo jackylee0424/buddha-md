@@ -1,0 +1,41 @@
+# buddha.md AI access
+
+This site provides Buddhist source texts and lecture transcripts for human reading and AI-agent workflows.
+
+Machine-readable entry points:
+- Main manifest: https://buddha.md/manifest.json
+- Tangjin manifest: https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/tangjin/manifest.json
+- Diamond Sutra lecture manifest: https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/manifest.json
+- Minimal CLI: https://buddha.md/cli
+
+Install the inspectable CLI:
+curl -fsSL https://buddha.md/cli -o buddha-md
+chmod +x buddha-md
+
+Learn the commands from built-in help:
+./buddha-md --help
+./buddha-md fetch --help
+./buddha-md fetch tangjin --help
+./buddha-md fetch diamond --help
+
+Raw text fetches are book-level only. Use the CLI help to choose the correct command for downloading a complete corpus into local files. The CLI keeps buddha.md small by downloading raw text files from this public repository snapshot.
+
+Download the Tangjin JSONL bundle if needed:
+./buddha-md bundle tangjin --out ./buddha-materials/tangjin-transcripts.jsonl
+
+Recommended AI-agent workflow:
+1. Download the CLI from https://buddha.md/cli.
+2. Run `chmod +x buddha-md`.
+3. Run `./buddha-md --help`, then command-level help such as `./buddha-md fetch --help`.
+4. Fetch one complete raw-text book corpus into a local folder.
+5. Use local transcript files as the source of truth.
+6. Cite the local filename and lecture number when answering.
+7. Prefer raw text endpoints over scraping the visual React site.
+
+CLI dependency policy:
+- Single inspectable POSIX shell script.
+- No Node, Python, npm, pip, package install, or third-party library dependencies.
+- Uses curl only for HTTPS downloads.
+
+Preferred citation:
+buddha.md, Tangjin lecture archive for the Platform Sutra course, Li Ruilie lecture transcripts.

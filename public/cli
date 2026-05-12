@@ -1,0 +1,240 @@
+#!/bin/sh
+set -eu
+
+SITE_URL="${BUDDHA_MD_BASE_URL:-https://buddha.md}"
+RAW_BASE_URL="${BUDDHA_MD_RAW_BASE_URL:-https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public}"
+
+usage() {
+  cat <<'USAGE'
+buddha-md minimal CLI
+
+Download inspectable raw Buddhist text materials from buddha.md.
+
+Usage:
+  buddha-md --help
+  buddha-md list [--help]
+  buddha-md manifest [diamond|tangjin] [--help]
+  buddha-md fetch [--help]
+  buddha-md fetch tangjin [--out DIR] [--help]
+  buddha-md fetch diamond [--out DIR] [--help]
+  buddha-md bundle tangjin [--out FILE] [--help]
+
+Raw text fetch commands:
+  ./buddha-md fetch tangjin --out ./buddha-materials
+  ./buddha-md fetch diamond --out ./buddha-materials
+
+Requirements:
+  POSIX sh and curl for HTTPS downloads. No Node, Python, npm, pip,
+  package install, or third-party library dependencies.
+
+Use command-level help for details:
+  ./buddha-md fetch --help
+  ./buddha-md fetch tangjin --help
+USAGE
+}
+
+list_help() {
+  cat <<'USAGE'
+buddha-md list
+
+Show the top-level machine-readable manifest.
+
+Usage:
+  buddha-md list
+  buddha-md list --help
+
+Output:
+  JSON manifest from https://buddha.md/manifest.json
+USAGE
+}
+
+manifest_help() {
+  cat <<'USAGE'
+buddha-md manifest
+
+Show machine-readable manifests for all books or one book.
+
+Usage:
+  buddha-md manifest
+  buddha-md manifest diamond
+  buddha-md manifest tangjin
+  buddha-md manifest --help
+  buddha-md manifest diamond --help
+  buddha-md manifest tangjin --help
+
+Books:
+  diamond  Diamond Sutra lecture raw texts: gold01.txt ... gold27.txt
+  tangjin  Platform Sutra / Tangjin raw texts: tangjin001.txt ... tangjin103.txt
+USAGE
+}
+
+fetch_help() {
+  cat <<'USAGE'
+buddha-md fetch
+
+Fetch one complete book corpus of raw text files. Fetching is intentionally
+book-level only for stable AI-agent workflows.
+
+Usage:
+  buddha-md fetch tangjin [--out DIR]
+  buddha-md fetch diamond [--out DIR]
+  buddha-md fetch --help
+  buddha-md fetch tangjin --help
+  buddha-md fetch diamond --help
+
+Examples:
+  ./buddha-md fetch tangjin --out ./buddha-materials
+  ./buddha-md fetch diamond --out ./buddha-materials
+
+Output layout:
+  DIR/tangjin/tangjin001.txt ... DIR/tangjin/tangjin103.txt
+  DIR/diamond/gold01.txt ... DIR/diamond/gold27.txt
+USAGE
+}
+
+bundle_help() {
+  cat <<'USAGE'
+buddha-md bundle
+
+Download a prebuilt bundle when available.
+
+Usage:
+  buddha-md bundle tangjin [--out FILE]
+  buddha-md bundle --help
+  buddha-md bundle tangjin --help
+
+Example:
+  ./buddha-md bundle tangjin --out ./buddha-materials/tangjin-transcripts.jsonl
+
+Available bundles:
+  tangjin  JSONL bundle of the complete 103-lecture Tangjin corpus
+USAGE
+}
+
+need_curl() {
+  command -v curl >/dev/null 2>&1 || { echo "curl is required for HTTPS downloads" >&2; exit 1; }
+}
+
+pad2() { printf '%02d' "$1"; }
+pad3() { printf '%03d' "$1"; }
+
+book_count() {
+  case "$1" in
+    diamond) echo 27 ;;
+    tangjin) echo 103 ;;
+    *) echo "Unknown book: $1" >&2; fetch_help; exit 1 ;;
+  esac
+}
+
+fetch_one() {
+  book="$1"
+  id="$2"
+  out_dir="$3"
+  mkdir -p "$out_dir/$book"
+  case "$book" in
+    diamond)
+      file="gold$(pad2 "$id").txt"
+      url="$RAW_BASE_URL/materials/diamond/$file"
+      ;;
+    tangjin)
+      file="tangjin$(pad3 "$id").txt"
+      url="$RAW_BASE_URL/materials/tangjin/$file"
+      ;;
+    *) echo "Unknown book: $book" >&2; fetch_help; exit 1 ;;
+  esac
+  echo "Fetching $url"
+  curl -fsSL "$url" -o "$out_dir/$book/$file"
+}
+
+fetch_book() {
+  book="$1"
+  out_dir="$2"
+  count="$(book_count "$book")"
+  i=1
+  while [ "$i" -le "$count" ]; do
+    fetch_one "$book" "$i" "$out_dir"
+    i=$((i + 1))
+  done
+  echo "Fetched $count $book transcript files into $out_dir/$book"
+}
+
+maybe_help() {
+  case "${1:-}" in
+    -h|--help|help) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+cmd="${1:-}"
+[ -n "$cmd" ] || { usage; exit 1; }
+shift || true
+
+case "$cmd" in
+  -h|--help|help)
+    usage
+    ;;
+  list)
+    if maybe_help "${1:-}"; then list_help; exit 0; fi
+    [ "$#" -eq 0 ] || { echo "Unknown option for list: $1" >&2; list_help; exit 1; }
+    need_curl
+    curl -fsSL "$SITE_URL/manifest.json"
+    ;;
+  manifest)
+    if maybe_help "${1:-}"; then manifest_help; exit 0; fi
+    book="${1:-}"
+    if [ -n "$book" ]; then
+      shift || true
+      if maybe_help "${1:-}"; then manifest_help; exit 0; fi
+      [ "$#" -eq 0 ] || { echo "Unknown option for manifest: $1" >&2; manifest_help; exit 1; }
+    fi
+    need_curl
+    case "$book" in
+      diamond) curl -fsSL "$RAW_BASE_URL/materials/diamond/manifest.json" ;;
+      tangjin) curl -fsSL "$RAW_BASE_URL/materials/tangjin/manifest.json" ;;
+      '') curl -fsSL "$SITE_URL/manifest.json" ;;
+      *) echo "Unknown manifest: $book" >&2; manifest_help; exit 1 ;;
+    esac
+    ;;
+  fetch)
+    if maybe_help "${1:-}"; then fetch_help; exit 0; fi
+    book="${1:-}"
+    [ -n "$book" ] || { fetch_help; exit 1; }
+    shift || true
+    if maybe_help "${1:-}"; then fetch_help; exit 0; fi
+    out_dir="./buddha-materials"
+    while [ "$#" -gt 0 ]; do
+      case "$1" in
+        --out) out_dir="${2:-}"; [ -n "$out_dir" ] || { echo "--out requires a directory" >&2; exit 1; }; shift 2 ;;
+        -h|--help|help) fetch_help; exit 0 ;;
+        *) echo "Unknown option for fetch: $1" >&2; fetch_help; exit 1 ;;
+      esac
+    done
+    need_curl
+    fetch_book "$book" "$out_dir"
+    ;;
+  bundle)
+    if maybe_help "${1:-}"; then bundle_help; exit 0; fi
+    book="${1:-}"
+    [ -n "$book" ] || { bundle_help; exit 1; }
+    shift || true
+    if maybe_help "${1:-}"; then bundle_help; exit 0; fi
+    [ "$book" = "tangjin" ] || { echo "Only tangjin bundle is available" >&2; bundle_help; exit 1; }
+    out_file="./tangjin-transcripts.jsonl"
+    while [ "$#" -gt 0 ]; do
+      case "$1" in
+        --out) out_file="${2:-}"; [ -n "$out_file" ] || { echo "--out requires a file" >&2; exit 1; }; shift 2 ;;
+        -h|--help|help) bundle_help; exit 0 ;;
+        *) echo "Unknown option: $1" >&2; bundle_help; exit 1 ;;
+      esac
+    done
+    need_curl
+    mkdir -p "$(dirname "$out_file")"
+    curl -fsSL "$RAW_BASE_URL/bundles/tangjin-transcripts.jsonl" -o "$out_file"
+    echo "Wrote $out_file"
+    ;;
+  *)
+    echo "Unknown command: $cmd" >&2
+    usage
+    exit 1
+    ;;
+esac

@@ -1,0 +1,25 @@
+{
+  "site": "buddha.md",
+  "name": "Buddhist Lecture Library",
+  "llms": "https://buddha.md/llms.txt",
+  "cli": "https://buddha.md/cli",
+  "books": [
+    {
+      "id": "diamond",
+      "title": "金剛經 / Diamond Sutra",
+      "lecture_count": 27,
+      "language": "zh-Hant",
+      "manifest": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/manifest.json"
+    },
+    {
+      "id": "tangjin",
+      "title": "六祖壇經 / Tangjin lecture archive",
+      "description": "Use tangjin for the 103-lecture Platform Sutra transcript corpus.",
+      "lecture_count": 103,
+      "language": "zh-Hant",
+      "manifest": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/tangjin/manifest.json",
+      "bundle": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/bundles/tangjin-transcripts.jsonl",
+      "bundle_gzip": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/bundles/tangjin-transcripts.jsonl.gz"
+    }
+  ]
+}

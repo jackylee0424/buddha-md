@@ -1,6 +1,6 @@
 type PlatformTranscriptPayload = Record<string, string[]>;
 
-const transcriptPayloadUrl = `${import.meta.env.BASE_URL}platform-transcripts.json.gz`;
+const transcriptPayloadUrl = import.meta.env.VITE_PLATFORM_TRANSCRIPTS_URL ?? 'https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/platform-transcripts.json.gz';
 
 const testFallbackTranscripts: PlatformTranscriptPayload = {
   "1": [

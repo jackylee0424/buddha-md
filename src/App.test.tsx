@@ -1,4 +1,7 @@
+import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 import App from './App';
 
 describe('App', () => {
@@ -16,6 +19,16 @@ describe('App', () => {
     expect(zhEntryLinks[0]).toHaveAttribute('href', '#/diamond');
     expect(zhEntryLinks[1]).toHaveAttribute('href', '#/platform');
     expect(screen.getByText(/擴充檢核清單/)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '給 AI Agent 使用的原始素材入口', level: 2 })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'CLI' })).toHaveAttribute('href', '/cli');
+    expect(screen.getAllByText(/use --help/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/\.\/buddha-md --help/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/\.\/buddha-md fetch --help/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/Fetch the tangjin raw texts into \.\/buddha-materials/)).toBeInTheDocument();
+    expect(screen.getByText(/Fetch the diamond raw texts into \.\/buddha-materials/)).toBeInTheDocument();
+    expect(screen.queryByText(/fetch platform/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/--lecture/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/--all/)).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: '繁體中文', pressed: true })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'English', pressed: false })).toBeInTheDocument();
   });
@@ -31,7 +44,25 @@ describe('App', () => {
     expect(screen.getByRole('link', { name: 'Enter Diamond Sutra' })).toHaveAttribute('href', '#/diamond');
     expect(screen.getByRole('link', { name: 'Enter Platform Sutra' })).toHaveAttribute('href', '#/platform');
     expect(screen.getByText(/Expansion checklist/)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Raw materials for AI agents', level: 2 })).toBeInTheDocument();
+    expect(screen.getAllByText(/install the CLI and use --help/i).length).toBeGreaterThan(0);
     expect(screen.getByRole('button', { name: 'English', pressed: true })).toBeInTheDocument();
+  });
+
+  it('copies an AI-agent prompt from the landing page', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, 'clipboard', {
+      value: { writeText },
+      configurable: true
+    });
+
+    render(<App />);
+
+    fireEvent.click(screen.getAllByRole('button', { name: 'Copy' })[0]);
+
+    expect(writeText).toHaveBeenCalledWith(expect.stringContaining('./buddha-md --help'));
+    expect(writeText).toHaveBeenCalledWith(expect.stringContaining('./buddha-md fetch --help'));
+    expect(await screen.findByRole('button', { name: 'Copied' })).toBeInTheDocument();
   });
 
   it('renders the Diamond Sutra book page with its existing archive', () => {
@@ -155,5 +186,32 @@ describe('App', () => {
     expect(screen.getByText(/There is no sudden or gradual in the Dharma/i)).toBeInTheDocument();
     expect(screen.queryByText(/菩提自性，本來清淨/)).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Back to Platform Sutra index' })).toBeInTheDocument();
+  });
+
+  it('shows built-in CLI help at every command level without package dependencies', () => {
+    const runHelp = (...args: string[]) => execFileSync('sh', ['public/cli', ...args], {
+      cwd: process.cwd(),
+      encoding: 'utf8'
+    });
+
+    const topHelp = runHelp('--help');
+    expect(topHelp).toContain('buddha-md minimal CLI');
+    expect(topHelp).toContain('./buddha-md fetch tangjin --out ./buddha-materials');
+    expect(topHelp).toContain('No Node, Python, npm, pip');
+
+    const fetchHelp = runHelp('fetch', '--help');
+    expect(fetchHelp).toContain('Fetch one complete book corpus of raw text files');
+    expect(fetchHelp).toContain('buddha-md fetch tangjin [--out DIR]');
+    expect(fetchHelp).toContain('book-level only for stable AI-agent workflows');
+
+    expect(runHelp('fetch', 'tangjin', '--help')).toContain('DIR/tangjin/tangjin001.txt');
+    expect(runHelp('fetch', 'diamond', '--help')).toContain('DIR/diamond/gold01.txt');
+    expect(runHelp('manifest', 'tangjin', '--help')).toContain('Platform Sutra / Tangjin raw texts');
+    expect(runHelp('bundle', 'tangjin', '--help')).toContain('Tangjin corpus');
+    expect(runHelp('list', '--help')).toContain('top-level machine-readable manifest');
+
+    const cliSource = readFileSync('public/cli', 'utf8');
+    expect(cliSource.startsWith('#!/bin/sh')).toBe(true);
+    expect(cliSource).not.toMatch(/\b(require|import)\b/);
   });
 });

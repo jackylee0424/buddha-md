@@ -1,0 +1,197 @@
+{
+  "id": "diamond",
+  "title": "金剛經講記 / Diamond Sutra lecture archive",
+  "language": "zh-Hant",
+  "lecture_count": 27,
+  "materials": [
+    {
+      "id": 1,
+      "filename": "gold01.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold01.txt",
+      "source_path": "transcripts/gold01.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 2,
+      "filename": "gold02.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold02.txt",
+      "source_path": "transcripts/gold02.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 3,
+      "filename": "gold03.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold03.txt",
+      "source_path": "transcripts/gold03.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 4,
+      "filename": "gold04.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold04.txt",
+      "source_path": "transcripts/gold04.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 5,
+      "filename": "gold05.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold05.txt",
+      "source_path": "transcripts/gold05.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 6,
+      "filename": "gold06.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold06.txt",
+      "source_path": "transcripts/gold06.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 7,
+      "filename": "gold07.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold07.txt",
+      "source_path": "transcripts/gold07.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 8,
+      "filename": "gold08.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold08.txt",
+      "source_path": "transcripts/gold08.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 9,
+      "filename": "gold09.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold09.txt",
+      "source_path": "transcripts/gold09.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 10,
+      "filename": "gold10.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold10.txt",
+      "source_path": "transcripts/gold10.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 11,
+      "filename": "gold11.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold11.txt",
+      "source_path": "transcripts/gold11.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 12,
+      "filename": "gold12.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold12.txt",
+      "source_path": "transcripts/gold12.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 13,
+      "filename": "gold13.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold13.txt",
+      "source_path": "transcripts/gold13.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 14,
+      "filename": "gold14.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold14.txt",
+      "source_path": "transcripts/gold14.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 15,
+      "filename": "gold15.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold15.txt",
+      "source_path": "transcripts/gold15.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 16,
+      "filename": "gold16.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold16.txt",
+      "source_path": "transcripts/gold16.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 17,
+      "filename": "gold17.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold17.txt",
+      "source_path": "transcripts/gold17.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 18,
+      "filename": "gold18.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold18.txt",
+      "source_path": "transcripts/gold18.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 19,
+      "filename": "gold19.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold19.txt",
+      "source_path": "transcripts/gold19.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 20,
+      "filename": "gold20.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold20.txt",
+      "source_path": "transcripts/gold20.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 21,
+      "filename": "gold21.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold21.txt",
+      "source_path": "transcripts/gold21.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 22,
+      "filename": "gold22.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold22.txt",
+      "source_path": "transcripts/gold22.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 23,
+      "filename": "gold23.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold23.txt",
+      "source_path": "transcripts/gold23.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 24,
+      "filename": "gold24.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold24.txt",
+      "source_path": "transcripts/gold24.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 25,
+      "filename": "gold25.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold25.txt",
+      "source_path": "transcripts/gold25.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 26,
+      "filename": "gold26.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold26.txt",
+      "source_path": "transcripts/gold26.txt",
+      "language": "zh-Hant"
+    },
+    {
+      "id": 27,
+      "filename": "gold27.txt",
+      "url": "https://raw.githubusercontent.com/jackylee0424/buddha-md/main/public/materials/diamond/gold27.txt",
+      "source_path": "transcripts/gold27.txt",
+      "language": "zh-Hant"
+    }
+  ]
+}

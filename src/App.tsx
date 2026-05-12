@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { aiAccessLocales } from './data/aiAccessData';
 import { libraryLocales } from './data/libraryData';
 import { localizedContent, type Locale } from './data/siteData';
 import { availableLectureIds, lecturePageLocales, lecturePages } from './data/lecturePages';
@@ -56,7 +57,9 @@ function App() {
   const [locale, setLocale] = useState<Locale>('zh-Hant');
   const [route, setRoute] = useState<Route>(() => parseRoute(window.location.hash));
   const [platformTranscriptState, setPlatformTranscriptState] = useState<{ id: number; paragraphs: string[] } | null>(null);
+  const [copiedPromptId, setCopiedPromptId] = useState<string | null>(null);
 
+  const aiAccessContent = aiAccessLocales[locale];
   const libraryContent = libraryLocales[locale];
   const diamondContent = localizedContent[locale];
   const diamondLectureChrome = lecturePageLocales[locale];
@@ -286,6 +289,25 @@ function App() {
     window.location.hash = '/platform';
   };
 
+  const copyPrompt = async (promptId: string, promptText: string) => {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(promptText);
+    } else {
+      const textarea = document.createElement('textarea');
+      textarea.value = promptText;
+      textarea.setAttribute('readonly', 'true');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    }
+
+    setCopiedPromptId(promptId);
+    window.setTimeout(() => setCopiedPromptId((current) => (current === promptId ? null : current)), 1800);
+  };
+
   const renderLanguageToggle = (ariaLabel: string, labels: Record<Locale, string>) => (
     <div className="language-toggle" role="group" aria-label={ariaLabel}>
       {localeOrder.map((nextLocale) => (
@@ -334,6 +356,44 @@ function App() {
                 </div>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className="scroll-panel section-card ai-access" aria-labelledby="ai-access-heading">
+          <div className="section-heading">
+            <span className="section-heading__eyebrow">{aiAccessContent.eyebrow}</span>
+            <h2 id="ai-access-heading">{aiAccessContent.heading}</h2>
+            <p className="section-heading__description">{aiAccessContent.description}</p>
+          </div>
+          <div className="ai-access__grid">
+            <div className="ai-access__endpoints">
+              <h3>{aiAccessContent.endpointHeading}</h3>
+              <ul>
+                {aiAccessContent.endpoints.map((endpoint) => (
+                  <li key={endpoint.href}>
+                    <a href={endpoint.href} target="_blank" rel="noreferrer">{endpoint.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="ai-access__prompts">
+              <p className="ai-access__instruction">{aiAccessContent.copyInstruction}</p>
+              {aiAccessContent.prompts.map((prompt) => (
+                <article className="prompt-card" key={prompt.id}>
+                  <div className="prompt-card__header">
+                    <h3>{prompt.title}</h3>
+                    <button
+                      type="button"
+                      className="prompt-card__copy"
+                      onClick={() => void copyPrompt(prompt.id, prompt.body)}
+                    >
+                      {copiedPromptId === prompt.id ? aiAccessContent.copiedLabel : aiAccessContent.copyLabel}
+                    </button>
+                  </div>
+                  <pre className="prompt-card__body"><code>{prompt.body}</code></pre>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
