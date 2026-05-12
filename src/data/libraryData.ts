@@ -40,8 +40,8 @@ export const libraryLocales: Record<Locale, {
     progressItems: [
       '首頁已改為 book-centered 入口，只保留《金剛經》與《六祖壇經》兩個主要方向。',
       '《金剛經》既有二十七講與原文頁保留，移入獨立書頁。',
-      '《六祖壇經》已建立原文／英文閱讀頁與講記 archive 骨架。',
-      '《六祖壇經》講記先上線前三講，後續可按批次把 103 份 transcript 打磨成全文頁。'
+      '《六祖壇經》已建立原文／英文閱讀頁與講記 archive。',
+      '《六祖壇經》103 講繁體中文 tangjin 逐字稿全文頁已全部上線，預覽卡提供短摘要。'
     ],
     books: [
       {
@@ -57,8 +57,8 @@ export const libraryLocales: Record<Locale, {
       {
         key: 'platform',
         title: '六祖壇經',
-        subtitle: '唐經原文、英文譯文與 103 講整理',
-        description: '新增《六祖壇經》獨立書頁，接入 tangjin 講記來源、Wikisource 繁體原文與公開英文譯本來源，並先建立前三講全文頁。',
+        subtitle: '壇經原文、英文譯文與 103 講全文',
+        description: '《六祖壇經》獨立書頁已接入 tangjin 講記來源、Wikisource 繁體原文、公開英文譯本來源，並開放 103 講繁體中文逐字稿全文頁。',
         ctaLabel: '進入六祖壇經',
         sourceLabel: '六祖壇經講記 YouTube playlist',
         sourceUrl: 'https://www.youtube.com/watch?v=Hd8BTiyvYj0&list=PLQP2d9x3sdYbE28-gEPp2nw5tmQyI8G12',
@@ -83,8 +83,8 @@ export const libraryLocales: Record<Locale, {
     progressItems: [
       'Landing page refactored into a book-centered entry with only Diamond Sutra and Platform Sutra as the primary paths.',
       'The existing twenty-seven Diamond Sutra lectures and source-text page remain intact inside the Diamond Sutra book page.',
-      'The Platform Sutra now has a source-text page, English reading mode, and lecture archive structure.',
-      'The first three Platform Sutra lecture pages are live; the remaining 103 transcript set can be polished in batches.'
+      'The Platform Sutra now has a source-text page, English reading mode, and lecture archive.',
+      'All 103 Platform Sutra Tangjin transcript pages are live in Traditional Chinese, with short preview-card summaries.'
     ],
     books: [
       {
@@ -101,7 +101,7 @@ export const libraryLocales: Record<Locale, {
         key: 'platform',
         title: 'Platform Sutra',
         subtitle: 'Chinese text, English reading, and 103 lectures',
-        description: 'Adds a dedicated Platform Sutra book page wired to the Tangjin lecture source, Wikisource Traditional Chinese text, a public English translation source, and the first three lecture pages.',
+        description: 'Adds a dedicated Platform Sutra book page wired to the Tangjin lecture source, Wikisource Traditional Chinese text, a public English translation source, and all 103 Traditional Chinese transcript pages.',
         ctaLabel: 'Enter Platform Sutra',
         sourceLabel: 'Platform Sutra lecture playlist',
         sourceUrl: 'https://www.youtube.com/watch?v=Hd8BTiyvYj0&list=PLQP2d9x3sdYbE28-gEPp2nw5tmQyI8G12',

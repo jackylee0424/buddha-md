@@ -49,7 +49,7 @@ describe('App', () => {
     expect(screen.queryByText('字數')).not.toBeInTheDocument();
   });
 
-  it('renders the Platform Sutra book page with source text and first lecture batch', () => {
+  it('renders the Platform Sutra book page with all Tangjin transcript pages live', () => {
     window.location.hash = '#/platform';
     render(<App />);
 
@@ -57,10 +57,11 @@ describe('App', () => {
     expect(screen.getByText(/一百零三講六祖壇經課程藏錄/)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: '閱讀壇經原文' })).toHaveAttribute('href', '#/platform/sutra');
     expect(screen.getByRole('heading', { name: '六祖壇經講說之一：行由、見性與佛性無南北', level: 3 })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: '第 004 講', level: 3 })).toBeInTheDocument();
-    expect(screen.getAllByText('閱讀')).toHaveLength(3);
-    expect(screen.getAllByText('待整理').length).toBeGreaterThan(90);
-    expect(screen.getByText(/第 004–103 講待逐批整理/)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '六祖壇經講說第 004 講', level: 3 })).toBeInTheDocument();
+    expect(screen.getByText(/阿摩羅。一切新生/)).toBeInTheDocument();
+    expect(screen.getAllByText('閱讀')).toHaveLength(103);
+    expect(screen.queryByText('待整理')).not.toBeInTheDocument();
+    expect(screen.getByText(/第 001–103 講繁體中文逐字稿已上線/)).toBeInTheDocument();
   });
 
   it('opens a full Diamond Sutra lecture page for lecture 1', async () => {
@@ -81,8 +82,17 @@ describe('App', () => {
     expect(
       await screen.findByRole('heading', { name: '六祖壇經講說之一：行由、見性與佛性無南北', level: 1 })
     ).toBeInTheDocument();
-    expect(screen.getByText(/重新補錄的因緣/)).toBeInTheDocument();
+    expect(await screen.findByText(/對於初期的錄影機不好/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '返回六祖壇經總覽' })).toBeInTheDocument();
+  });
+
+  it('opens a late Platform Sutra Tangjin transcript page', async () => {
+    window.location.hash = '#/platform/lecture/103';
+    render(<App />);
+
+    expect(await screen.findByRole('heading', { name: '六祖壇經講說第 103 講', level: 1 })).toBeInTheDocument();
+    expect((await screen.findAllByText(/上期剛好說到這裡/)).length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByText(/本講已接入繁體中文 tangjin 逐字稿全文/)).toBeInTheDocument();
   });
 
   it('opens the traditional Chinese Diamond Sutra text page', async () => {

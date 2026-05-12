@@ -9,6 +9,7 @@ import {
   platformLecturePages,
   platformLocalizedContent
 } from './data/platformData';
+import { loadPlatformTranscript } from './data/platformTranscripts';
 import { platformSutraPageContent, platformSutraSections } from './data/platformSutraText';
 import './styles.css';
 
@@ -54,6 +55,7 @@ function formatPlatformLectureHash(lectureId: number) {
 function App() {
   const [locale, setLocale] = useState<Locale>('zh-Hant');
   const [route, setRoute] = useState<Route>(() => parseRoute(window.location.hash));
+  const [platformTranscriptState, setPlatformTranscriptState] = useState<{ id: number; paragraphs: string[] } | null>(null);
 
   const libraryContent = libraryLocales[locale];
   const diamondContent = localizedContent[locale];
@@ -114,7 +116,9 @@ function App() {
   const platformLectureParagraphs = platformLecture
     ? locale === 'en' && platformLectureHasEnglish
       ? platformLecture.enFull!
-      : platformLecture.zhFull
+      : platformTranscriptState?.id === platformLecture.id
+        ? platformTranscriptState.paragraphs
+        : platformLecture.zhFull ?? []
     : [];
 
   const diamondSessionCards = useMemo(
@@ -176,6 +180,31 @@ function App() {
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
+
+  useEffect(() => {
+    if (route.view !== 'platformLecture' || !platformLecture || !platformLectureIsAvailable) {
+      setPlatformTranscriptState(null);
+      return;
+    }
+
+    if (locale === 'en' && platformLectureHasEnglish) {
+      return;
+    }
+
+    let isCancelled = false;
+    const lectureId = platformLecture.id;
+    setPlatformTranscriptState((current) => (current?.id === lectureId ? current : null));
+
+    loadPlatformTranscript(lectureId).then((paragraphs) => {
+      if (!isCancelled) {
+        setPlatformTranscriptState({ id: lectureId, paragraphs });
+      }
+    });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [locale, platformLecture, platformLectureHasEnglish, platformLectureIsAvailable, route.view]);
 
   useEffect(() => {
     const descriptionTag = document.querySelector('meta[name="description"]');
@@ -446,8 +475,8 @@ function App() {
           </div>
           <ol className="ritual-list progress-list">
             {(locale === 'en'
-              ? ['Playlist source wired', 'Traditional Chinese source-text route created', 'English source-text route created', 'Lectures 001–003 live', 'Lectures 004–103 pending transcript polish']
-              : ['講記 playlist 已接入', '繁體中文原典頁已建立', '英文譯文閱讀模式已建立', '第 001–003 講已上線', '第 004–103 講待逐批整理']).map((item) => <li key={item}>{item}</li>)}
+              ? ['Playlist source wired', 'Traditional Chinese source-text route created', 'English source-text route created', 'Lectures 001–103 Traditional Chinese transcripts live', 'Preview cards now carry short summaries']
+              : ['講記 playlist 已接入', '繁體中文原典頁已建立', '英文譯文閱讀模式已建立', '第 001–103 講繁體中文逐字稿已上線', '預覽卡已加入短摘要']).map((item) => <li key={item}>{item}</li>)}
           </ol>
         </section>
 
@@ -630,7 +659,11 @@ function App() {
             <span className="section-heading__eyebrow">{locale === 'en' && lectureHasEnglish ? chrome.fullTextReadyEnglish : chrome.fullTextReady}</span>
             <h2>{lectureTitle}</h2>
           </div>
-          <div className="lecture-detail__body">{lectureParagraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
+          <div className="lecture-detail__body">
+            {lectureParagraphs.length > 0
+              ? lectureParagraphs.map((paragraph, index) => <p key={`lecture-paragraph-${index}`}>{paragraph}</p>)
+              : <p>{locale === 'en' ? 'Loading Traditional Chinese transcript…' : '逐字稿載入中…'}</p>}
+          </div>
         </article>
       ) : (
         <section className="scroll-panel section-card lecture-unavailable">
