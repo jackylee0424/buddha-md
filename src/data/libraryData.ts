@@ -34,7 +34,7 @@ export const libraryLocales: Record<Locale, {
       'zh-Hant': '繁體中文',
       en: 'English'
     },
-    entriesHeading: '兩部主典入口',
+    entriesHeading: '典藏',
     entriesDescription: '每一部書都有獨立首頁、原文閱讀頁與逐講講記頁，後續新增書目時可沿用同一套結構。',
     progressHeading: '擴充檢核清單',
     progressItems: [
@@ -47,20 +47,20 @@ export const libraryLocales: Record<Locale, {
       {
         key: 'diamond',
         title: '金剛經',
-        subtitle: '二十七講講記與經文原典',
+        subtitle: '二十七講講記(李瑞烈老師)與經文原典',
         description: '保留既有《金剛經講記》完整 archive、二十七講全文頁，以及繁體中文／英文切換的《金剛經》原文頁。',
-        ctaLabel: '進入金剛經',
-        sourceLabel: '李瑞烈老師《金剛經》講記 playlist',
+        ctaLabel: '進入',
+        sourceLabel: '李瑞烈老師《金剛經》講記',
         sourceUrl: 'https://www.youtube.com/watch?v=PvFx_UBTp9c&list=PLQP2d9x3sdYYfYK955L0rfZO3TPoRX5yQ',
         href: '#/diamond'
       },
       {
         key: 'platform',
         title: '六祖壇經',
-        subtitle: '壇經原文、英文譯文與 103 講全文',
-        description: '《六祖壇經》獨立書頁已接入 tangjin 講記來源、Wikisource 繁體原文、公開英文譯本來源，並開放 103 講繁體中文逐字稿全文頁。',
-        ctaLabel: '進入六祖壇經',
-        sourceLabel: '六祖壇經講記 YouTube playlist',
+        subtitle: '壇經原文、英文譯文與一百零三講講全文 (李瑞烈老師) ',
+        description: '《六祖壇經》獨立書頁已接入 tangjin 講記來源、Wikisource 繁體原文、公開英文譯本來源，並開放一百零三講繁體中文逐字稿全文頁。',
+        ctaLabel: '進入',
+        sourceLabel: '李瑞烈老師《六祖壇經》講記',
         sourceUrl: 'https://www.youtube.com/watch?v=Hd8BTiyvYj0&list=PLQP2d9x3sdYbE28-gEPp2nw5tmQyI8G12',
         href: '#/platform'
       }

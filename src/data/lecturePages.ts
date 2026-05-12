@@ -942,7 +942,7 @@ export const lecturePages: Record<number, LecturePage> = {
 export const lecturePageLocales = {
   'zh-Hant': {
     archiveKicker: '講記典藏',
-    archiveHeading: '二十七講全文閱讀',
+    archiveHeading: '二十七講全文閱讀-李瑞烈老師',
     archiveDescription:
       '以下二十七講已整理為可直接閱讀的講記頁面，保留講說脈絡，方便逐講深入研讀。',
     pendingLabel: '後續整理中',

@@ -789,7 +789,7 @@ export const platformLecturePageLocales: Record<Locale, {
 }> = {
   'zh-Hant': {
     archiveKicker: '一百零三講總覽',
-    archiveHeading: '六祖壇經逐講選讀',
+    archiveHeading: '六祖壇經逐講選讀-李瑞烈老師',
     archiveDescription: '103 講繁體中文 tangjin 逐字稿全文頁已全部上線；每張預覽卡提供短摘要，方便快速定位講次。',
     readFullText: '閱讀',
     pendingLabel: '待整理',

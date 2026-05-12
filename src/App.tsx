@@ -362,7 +362,6 @@ function App() {
         <p className="hero__description">{diamondContent.description}</p>
         <div className="detail-actions detail-actions--hero">
           <button type="button" className="detail-link detail-link--button" onClick={goHome}>{locale === 'en' ? 'Back to library' : '返回典藏首頁'}</button>
-          <a className="hero__source" href={diamondContent.sourceUrl} target="_blank" rel="noreferrer">{diamondContent.sourceLabel}</a>
         </div>
       </header>
 
@@ -387,6 +386,8 @@ function App() {
           <div className="section-heading">
             <span className="section-heading__eyebrow">{diamondContent.ritualEyebrow}</span>
             <h2>{diamondContent.ritualHeading}</h2>
+                      <a className="hero__source" href={diamondContent.sourceUrl} target="_blank" rel="noreferrer">{diamondContent.sourceLabel}</a>
+
           </div>
           <ol className="ritual-list">{diamondContent.ritualSteps.map((step) => <li key={step}>{step}</li>)}</ol>
         </section>
@@ -424,7 +425,6 @@ function App() {
         <p className="hero__description">{platformContent.description}</p>
         <div className="detail-actions detail-actions--hero">
           <button type="button" className="detail-link detail-link--button" onClick={goHome}>{locale === 'en' ? 'Back to library' : '返回典藏首頁'}</button>
-          <a className="hero__source" href={platformContent.sourceUrl} target="_blank" rel="noreferrer">{platformContent.sourceLabel}</a>
         </div>
       </header>
 
@@ -449,6 +449,8 @@ function App() {
           <div className="section-heading">
             <span className="section-heading__eyebrow">{platformContent.ritualEyebrow}</span>
             <h2>{platformContent.ritualHeading}</h2>
+                      <a className="hero__source" href={platformContent.sourceUrl} target="_blank" rel="noreferrer">{platformContent.sourceLabel}</a>
+
           </div>
           <ol className="ritual-list">{platformContent.ritualSteps.map((step) => <li key={step}>{step}</li>)}</ol>
         </section>
