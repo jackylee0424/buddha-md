@@ -12,8 +12,9 @@ describe('App', () => {
     expect(screen.getByRole('heading', { name: '佛經講記典藏', level: 1 })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '金剛經', level: 3 })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '六祖壇經', level: 3 })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: '進入金剛經' })).toHaveAttribute('href', '#/diamond');
-    expect(screen.getByRole('link', { name: '進入六祖壇經' })).toHaveAttribute('href', '#/platform');
+    const zhEntryLinks = screen.getAllByRole('link', { name: '進入' });
+    expect(zhEntryLinks[0]).toHaveAttribute('href', '#/diamond');
+    expect(zhEntryLinks[1]).toHaveAttribute('href', '#/platform');
     expect(screen.getByText(/擴充檢核清單/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '繁體中文', pressed: true })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'English', pressed: false })).toBeInTheDocument();
@@ -56,9 +57,9 @@ describe('App', () => {
     expect(screen.getByRole('heading', { name: '六祖壇經講記', level: 1 })).toBeInTheDocument();
     expect(screen.getByText(/一百零三講六祖壇經課程藏錄/)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: '閱讀壇經原文' })).toHaveAttribute('href', '#/platform/sutra');
-    expect(screen.getByRole('heading', { name: '六祖壇經講說之一：行由、見性與佛性無南北', level: 3 })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: '六祖壇經講說第 004 講', level: 3 })).toBeInTheDocument();
-    expect(screen.getByText(/解第九清淨識如日被妄雲覆蔽/)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '六祖壇經講說第 001 講：行由、法寶與佛性無南北', level: 3 })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '六祖壇經講說第 004 講：清淨識、雲日譬喻與神秀偈', level: 3 })).toBeInTheDocument();
+    expect(screen.getByText(/第九清淨識被譬喻為雲層上常照的太陽/)).toBeInTheDocument();
     expect(screen.getAllByText('閱讀')).toHaveLength(103);
     expect(screen.queryByText('待整理')).not.toBeInTheDocument();
     expect(screen.getByText(/第 001–103 講繁體中文逐字稿已上線/)).toBeInTheDocument();
@@ -71,8 +72,8 @@ describe('App', () => {
     fireEvent.click(screen.getByRole('button', { name: 'English' }));
 
     expect(screen.getByRole('heading', { name: 'Platform Sutra Lecture Archive', level: 1 })).toBeInTheDocument();
-    expect(screen.getByText(/Explains the ninth pure consciousness/)).toBeInTheDocument();
-    expect(screen.getByText(/Supplements Huineng's transmission and posthumous titles/)).toBeInTheDocument();
+    expect(screen.getByText(/The ninth pure consciousness is compared to the sun above the clouds/)).toBeInTheDocument();
+    expect(screen.getByText(/The final lecture cites transmission records/)).toBeInTheDocument();
     expect(screen.getAllByText('Read')).toHaveLength(103);
   });
 
@@ -92,7 +93,7 @@ describe('App', () => {
     render(<App />);
 
     expect(
-      await screen.findByRole('heading', { name: '六祖壇經講說之一：行由、見性與佛性無南北', level: 1 })
+      await screen.findByRole('heading', { name: '六祖壇經講說第 001 講：行由、法寶與佛性無南北', level: 1 })
     ).toBeInTheDocument();
     expect(await screen.findByText(/對於初期的錄影機不好/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '返回六祖壇經總覽' })).toBeInTheDocument();
@@ -102,7 +103,7 @@ describe('App', () => {
     window.location.hash = '#/platform/lecture/103';
     render(<App />);
 
-    expect(await screen.findByRole('heading', { name: '六祖壇經講說第 103 講', level: 1 })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: '六祖壇經講說第 103 講：四十三法嗣、自性三寶與諡號流傳', level: 1 })).toBeInTheDocument();
     expect(await screen.findByText(/上期剛好說到這裡/)).toBeInTheDocument();
     expect(screen.getByText(/本講已接入繁體中文 tangjin 逐字稿全文/)).toBeInTheDocument();
   });
