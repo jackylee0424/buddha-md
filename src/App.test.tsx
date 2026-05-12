@@ -58,10 +58,22 @@ describe('App', () => {
     expect(screen.getByRole('link', { name: '閱讀壇經原文' })).toHaveAttribute('href', '#/platform/sutra');
     expect(screen.getByRole('heading', { name: '六祖壇經講說之一：行由、見性與佛性無南北', level: 3 })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '六祖壇經講說第 004 講', level: 3 })).toBeInTheDocument();
-    expect(screen.getByText(/阿摩羅。一切新生/)).toBeInTheDocument();
+    expect(screen.getByText(/解第九清淨識如日被妄雲覆蔽/)).toBeInTheDocument();
     expect(screen.getAllByText('閱讀')).toHaveLength(103);
     expect(screen.queryByText('待整理')).not.toBeInTheDocument();
     expect(screen.getByText(/第 001–103 講繁體中文逐字稿已上線/)).toBeInTheDocument();
+  });
+
+  it('shows transcript-grounded English summaries on the Platform Sutra archive', () => {
+    window.location.hash = '#/platform';
+    render(<App />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'English' }));
+
+    expect(screen.getByRole('heading', { name: 'Platform Sutra Lecture Archive', level: 1 })).toBeInTheDocument();
+    expect(screen.getByText(/Explains the ninth pure consciousness/)).toBeInTheDocument();
+    expect(screen.getByText(/Supplements Huineng's transmission and posthumous titles/)).toBeInTheDocument();
+    expect(screen.getAllByText('Read')).toHaveLength(103);
   });
 
   it('opens a full Diamond Sutra lecture page for lecture 1', async () => {
@@ -91,7 +103,7 @@ describe('App', () => {
     render(<App />);
 
     expect(await screen.findByRole('heading', { name: '六祖壇經講說第 103 講', level: 1 })).toBeInTheDocument();
-    expect((await screen.findAllByText(/上期剛好說到這裡/)).length).toBeGreaterThanOrEqual(2);
+    expect(await screen.findByText(/上期剛好說到這裡/)).toBeInTheDocument();
     expect(screen.getByText(/本講已接入繁體中文 tangjin 逐字稿全文/)).toBeInTheDocument();
   });
 
