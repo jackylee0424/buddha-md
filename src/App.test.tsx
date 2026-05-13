@@ -1,5 +1,7 @@
 import { execFileSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import App from './App';
@@ -19,13 +21,15 @@ describe('App', () => {
     expect(zhEntryLinks[0]).toHaveAttribute('href', '#/diamond');
     expect(zhEntryLinks[1]).toHaveAttribute('href', '#/platform');
     expect(screen.getByText(/擴充檢核清單/)).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: '給 AI Agent 使用的原始素材入口', level: 2 })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'CLI' })).toHaveAttribute('href', '/cli');
-    expect(screen.getAllByText(/use --help/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/\.\/buddha-md --help/).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/\.\/buddha-md fetch --help/).length).toBeGreaterThan(0);
-    expect(screen.getByText(/Fetch the tangjin raw texts into \.\/buddha-materials/)).toBeInTheDocument();
-    expect(screen.getByText(/Fetch the diamond raw texts into \.\/buddha-materials/)).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: '給 AI Agent 使用的原始素材入口', level: 2 })).not.toBeInTheDocument();
+    expect(screen.queryByText('AI / CLI ACCESS')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '下載金剛經原始文字', level: 4 })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '下載 tangjin 原始文字', level: 4 })).toBeInTheDocument();
+    expect(screen.getAllByText(/curl -fsSL https:\/\/buddha\.md\/install\.sh \| sh/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/buddha-md --help/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/buddha-md fetch tangjin/)).toBeInTheDocument();
+    expect(screen.getByText(/buddha-md fetch diamond/)).toBeInTheDocument();
+    expect(screen.queryByText(/\.\/buddha-md/)).not.toBeInTheDocument();
     expect(screen.queryByText(/fetch platform/)).not.toBeInTheDocument();
     expect(screen.queryByText(/--lecture/)).not.toBeInTheDocument();
     expect(screen.queryByText(/--all/)).not.toBeInTheDocument();
@@ -44,12 +48,14 @@ describe('App', () => {
     expect(screen.getByRole('link', { name: 'Enter Diamond Sutra' })).toHaveAttribute('href', '#/diamond');
     expect(screen.getByRole('link', { name: 'Enter Platform Sutra' })).toHaveAttribute('href', '#/platform');
     expect(screen.getByText(/Expansion checklist/)).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Raw materials for AI agents', level: 2 })).toBeInTheDocument();
-    expect(screen.getAllByText(/install the CLI and use --help/i).length).toBeGreaterThan(0);
+    expect(screen.queryByRole('heading', { name: 'Raw materials for AI agents', level: 2 })).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Download Diamond Sutra raw texts', level: 4 })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Download Tangjin raw texts', level: 4 })).toBeInTheDocument();
+    expect(screen.getByText(/Download Tangjin texts:/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'English', pressed: true })).toBeInTheDocument();
   });
 
-  it('copies an AI-agent prompt from the landing page', async () => {
+  it('copies a book-card CLI prompt from the landing page', async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
     Object.defineProperty(navigator, 'clipboard', {
       value: { writeText },
@@ -58,10 +64,11 @@ describe('App', () => {
 
     render(<App />);
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'Copy' })[0]);
+    fireEvent.click(screen.getAllByRole('button', { name: 'Copy' })[1]);
 
-    expect(writeText).toHaveBeenCalledWith(expect.stringContaining('./buddha-md --help'));
-    expect(writeText).toHaveBeenCalledWith(expect.stringContaining('./buddha-md fetch --help'));
+    expect(writeText).toHaveBeenCalledWith(expect.stringContaining('curl -fsSL https://buddha.md/install.sh | sh'));
+    expect(writeText).toHaveBeenCalledWith(expect.stringContaining('buddha-md --help'));
+    expect(writeText).toHaveBeenCalledWith(expect.stringContaining('buddha-md fetch tangjin'));
     expect(await screen.findByRole('button', { name: 'Copied' })).toBeInTheDocument();
   });
 
@@ -196,7 +203,8 @@ describe('App', () => {
 
     const topHelp = runHelp('--help');
     expect(topHelp).toContain('buddha-md minimal CLI');
-    expect(topHelp).toContain('./buddha-md fetch tangjin --out ./buddha-materials');
+    expect(topHelp).toContain('curl -fsSL https://buddha.md/install.sh | sh');
+    expect(topHelp).toContain('buddha-md fetch tangjin');
     expect(topHelp).toContain('No Node, Python, npm, pip');
 
     const fetchHelp = runHelp('fetch', '--help');
@@ -213,5 +221,25 @@ describe('App', () => {
     const cliSource = readFileSync('public/cli', 'utf8');
     expect(cliSource.startsWith('#!/bin/sh')).toBe(true);
     expect(cliSource).not.toMatch(/\b(require|import)\b/);
+  });
+
+  it('installs the CLI from install.sh via curl', () => {
+    const installDir = mkdtempSync(join(tmpdir(), 'buddha-md-install-'));
+    try {
+      execFileSync('sh', ['public/install.sh'], {
+        cwd: process.cwd(),
+        encoding: 'utf8',
+        env: {
+          ...process.env,
+          BUDDHA_MD_BASE_URL: `file://${process.cwd()}/public`,
+          BUDDHA_MD_INSTALL_DIR: installDir
+        }
+      });
+      const installedHelp = execFileSync(join(installDir, 'buddha-md'), ['--help'], { encoding: 'utf8' });
+      expect(installedHelp).toContain('buddha-md minimal CLI');
+      expect(installedHelp).toContain('buddha-md fetch tangjin');
+    } finally {
+      rmSync(installDir, { recursive: true, force: true });
+    }
   });
 });

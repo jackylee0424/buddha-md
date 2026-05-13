@@ -12,6 +12,8 @@ export const libraryLocales: Record<Locale, {
   entriesDescription: string;
   progressHeading: string;
   progressItems: string[];
+  copyLabel: string;
+  copiedLabel: string;
   books: Array<{
     key: 'diamond' | 'platform';
     title: string;
@@ -21,6 +23,8 @@ export const libraryLocales: Record<Locale, {
     sourceLabel: string;
     sourceUrl: string;
     href: string;
+    cliPromptTitle: string;
+    cliPromptBody: string;
   }>;
 }> = {
   'zh-Hant': {
@@ -37,6 +41,8 @@ export const libraryLocales: Record<Locale, {
     entriesHeading: '典藏',
     entriesDescription: '每一部書都有獨立首頁、原文閱讀頁與逐講講記頁，後續新增書目時可沿用同一套結構。',
     progressHeading: '擴充檢核清單',
+    copyLabel: 'Copy',
+    copiedLabel: 'Copied',
     progressItems: [
       '首頁已改為 book-centered 入口，只保留《金剛經》與《六祖壇經》兩個主要方向。',
       '《金剛經》既有二十七講與原文頁保留，移入獨立書頁。',
@@ -52,7 +58,15 @@ export const libraryLocales: Record<Locale, {
         ctaLabel: '進入',
         sourceLabel: '李瑞烈老師《金剛經》講記',
         sourceUrl: 'https://www.youtube.com/watch?v=PvFx_UBTp9c&list=PLQP2d9x3sdYYfYK955L0rfZO3TPoRX5yQ',
-        href: '#/diamond'
+        href: '#/diamond',
+        cliPromptTitle: '下載金剛經原始文字',
+        cliPromptBody: `Install CLI via curl:
+curl -fsSL https://buddha.md/install.sh | sh
+
+Use buddha-md --help to learn about this CLI tool.
+
+Download Diamond Sutra texts:
+buddha-md fetch diamond`
       },
       {
         key: 'platform',
@@ -62,7 +76,15 @@ export const libraryLocales: Record<Locale, {
         ctaLabel: '進入',
         sourceLabel: '李瑞烈老師《六祖壇經》講記',
         sourceUrl: 'https://www.youtube.com/watch?v=Hd8BTiyvYj0&list=PLQP2d9x3sdYbE28-gEPp2nw5tmQyI8G12',
-        href: '#/platform'
+        href: '#/platform',
+        cliPromptTitle: '下載 tangjin 原始文字',
+        cliPromptBody: `Install CLI via curl:
+curl -fsSL https://buddha.md/install.sh | sh
+
+Use buddha-md --help to learn about this CLI tool.
+
+Download Tangjin texts:
+buddha-md fetch tangjin`
       }
     ]
   },
@@ -80,6 +102,8 @@ export const libraryLocales: Record<Locale, {
     entriesHeading: 'Two main book entries',
     entriesDescription: 'Each book has its own home, source-text reading page, and lecture-note pages, so future books can reuse the same pattern.',
     progressHeading: 'Expansion checklist',
+    copyLabel: 'Copy',
+    copiedLabel: 'Copied',
     progressItems: [
       'Landing page refactored into a book-centered entry with only Diamond Sutra and Platform Sutra as the primary paths.',
       'The existing twenty-seven Diamond Sutra lectures and source-text page remain intact inside the Diamond Sutra book page.',
@@ -95,7 +119,15 @@ export const libraryLocales: Record<Locale, {
         ctaLabel: 'Enter Diamond Sutra',
         sourceLabel: 'Li Ruilie Diamond Sutra lecture playlist',
         sourceUrl: 'https://www.youtube.com/watch?v=PvFx_UBTp9c&list=PLQP2d9x3sdYYfYK955L0rfZO3TPoRX5yQ',
-        href: '#/diamond'
+        href: '#/diamond',
+        cliPromptTitle: 'Download Diamond Sutra raw texts',
+        cliPromptBody: `Install CLI via curl:
+curl -fsSL https://buddha.md/install.sh | sh
+
+Use buddha-md --help to learn about this CLI tool.
+
+Download Diamond Sutra texts:
+buddha-md fetch diamond`
       },
       {
         key: 'platform',
@@ -105,7 +137,15 @@ export const libraryLocales: Record<Locale, {
         ctaLabel: 'Enter Platform Sutra',
         sourceLabel: 'Platform Sutra lecture playlist',
         sourceUrl: 'https://www.youtube.com/watch?v=Hd8BTiyvYj0&list=PLQP2d9x3sdYbE28-gEPp2nw5tmQyI8G12',
-        href: '#/platform'
+        href: '#/platform',
+        cliPromptTitle: 'Download Tangjin raw texts',
+        cliPromptBody: `Install CLI via curl:
+curl -fsSL https://buddha.md/install.sh | sh
+
+Use buddha-md --help to learn about this CLI tool.
+
+Download Tangjin texts:
+buddha-md fetch tangjin`
       }
     ]
   }

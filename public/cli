@@ -10,6 +10,9 @@ buddha-md minimal CLI
 
 Download inspectable raw Buddhist text materials from buddha.md.
 
+Install:
+  curl -fsSL https://buddha.md/install.sh | sh
+
 Usage:
   buddha-md --help
   buddha-md list [--help]
@@ -20,16 +23,17 @@ Usage:
   buddha-md bundle tangjin [--out FILE] [--help]
 
 Raw text fetch commands:
-  ./buddha-md fetch tangjin --out ./buddha-materials
-  ./buddha-md fetch diamond --out ./buddha-materials
+  buddha-md fetch tangjin
+  buddha-md fetch diamond
 
 Requirements:
   POSIX sh and curl for HTTPS downloads. No Node, Python, npm, pip,
   package install, or third-party library dependencies.
 
 Use command-level help for details:
-  ./buddha-md fetch --help
-  ./buddha-md fetch tangjin --help
+  buddha-md --help
+  buddha-md fetch --help
+  buddha-md fetch tangjin --help
 USAGE
 }
 
@@ -83,8 +87,8 @@ Usage:
   buddha-md fetch diamond --help
 
 Examples:
-  ./buddha-md fetch tangjin --out ./buddha-materials
-  ./buddha-md fetch diamond --out ./buddha-materials
+  buddha-md fetch tangjin
+  buddha-md fetch diamond
 
 Output layout:
   DIR/tangjin/tangjin001.txt ... DIR/tangjin/tangjin103.txt
@@ -104,7 +108,7 @@ Usage:
   buddha-md bundle tangjin --help
 
 Example:
-  ./buddha-md bundle tangjin --out ./buddha-materials/tangjin-transcripts.jsonl
+  buddha-md bundle tangjin --out ./buddha-materials/tangjin-transcripts.jsonl
 
 Available bundles:
   tangjin  JSONL bundle of the complete 103-lecture Tangjin corpus
