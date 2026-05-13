@@ -14,13 +14,13 @@ describe('App', () => {
   it('renders the clean book-centered landing page by default', () => {
     render(<App />);
 
-    expect(screen.getByRole('heading', { name: '佛經講記典藏', level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '佛經講記', level: 1 })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '金剛經', level: 3 })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '六祖壇經', level: 3 })).toBeInTheDocument();
     const zhEntryLinks = screen.getAllByRole('link', { name: '進入' });
     expect(zhEntryLinks[0]).toHaveAttribute('href', '#/diamond');
     expect(zhEntryLinks[1]).toHaveAttribute('href', '#/platform');
-    expect(screen.getByText(/擴充檢核清單/)).toBeInTheDocument();
+    expect(screen.queryByText(/擴充檢核清單/)).not.toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: '給 AI Agent 使用的原始素材入口', level: 2 })).not.toBeInTheDocument();
     expect(screen.queryByText('AI / CLI ACCESS')).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '讓AI Agent來回答金剛經講記相關問題，複製後貼給你的AI Agent', level: 4 })).toBeInTheDocument();
@@ -46,13 +46,13 @@ describe('App', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'English' }));
 
-    expect(screen.getByRole('heading', { name: 'Buddhist Lecture Library', level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Buddhist Library', level: 1 })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Diamond Sutra', level: 3 })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Platform Sutra', level: 3 })).toBeInTheDocument();
     const enEntryLinks = screen.getAllByRole('link', { name: 'Enter' });
     expect(enEntryLinks[0]).toHaveAttribute('href', '#/diamond');
     expect(enEntryLinks[1]).toHaveAttribute('href', '#/platform');
-    expect(screen.getByText(/Expansion checklist/)).toBeInTheDocument();
+    expect(screen.getByText(/expansion checklist/i)).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Raw materials for AI agents', level: 2 })).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Let AI Agent answer Diamond Sutra questions, copy and paste this to your AI Agent to get started', level: 4 })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Let AI Agent answer Platform Sutra questions, copy and paste this to your AI Agent to get started', level: 4 })).toBeInTheDocument();
@@ -73,7 +73,7 @@ describe('App', () => {
 
     render(<App />);
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'Copy' })[1]);
+    fireEvent.click(screen.getAllByRole('button', { name: 'Copy Prompts' })[1]);
 
     expect(writeText).toHaveBeenCalledWith(expect.stringContaining('curl -fsSL https://buddha.md/install.sh | sh'));
     expect(writeText).toHaveBeenCalledWith(expect.stringContaining('buddha-md --help'));
