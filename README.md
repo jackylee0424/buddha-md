@@ -1,77 +1,66 @@
 # buddha-md
 
-A text archive of Traditional Chinese transcripts from Teacher Li Ruilie's (李瑞烈老師) lecture series on the **Diamond Sutra** (金剛般若波羅蜜經).
+Buddhist truths remain unchanged, but the words that carry them may change.
+佛學道理不變，但其乘載之文字可變。
 
-Source playlist: https://www.youtube.com/watch?v=PvFx_UBTp9c&list=PLQP2d9x3sdYYfYK955L0rfZO3TPoRX5yQ
+This is a book-centered Buddhist lecture library starting from Li Ruilie Traditional Chinese lecture transcripts, source texts, and translations. The website supports **繁體中文 / English** chrome and organizes content as book entries rather than a single transcript list. The archive is intended for reading, searching, editorial work, and downstream AI-assisted study using locally fetched texts.
 
-## About
+The website currently presents two main entries:
 
-The Diamond Sutra (金剛經, *Vajracchedikā Prajñāpāramitā Sūtra*) is one of the most influential texts in Mahayana Buddhism. This repository preserves lecture transcripts in plain text for reading, searching, and downstream editorial or archival work.
+- **Diamond Sutra** (金剛經)
+- **Platform Sutra** (六祖壇經)
 
-The lectures draw on the insights of classical masters including:
+## Book entries
 
-- **惠能六祖** (the Sixth Patriarch Huineng)
-- **呂純陽祖師** (Ancestor Lü Chunyang)
-- **月溪法師** (Master Yuexi)
-- **道濟禪師** (Chan Master Daoji)
+### Diamond Sutra
 
-The teaching emphasis, as reflected in the lectures, is that understanding the sutra must be joined to actual practice: *"不修即凡夫，修耶同聖智"*.
-
-## Repository layout
-
-```text
-.
-├── README.md
-├── LICENSE
-├── index.html
-├── package.json
-├── scripts/
-│   └── validate_transcripts.py
-├── src/
-│   ├── App.tsx
-│   ├── data/siteData.ts
-│   └── styles.css
-└── transcripts/
-    ├── gold01.txt
-    ├── gold02.txt
-    ├── ...
-    └── gold27.txt
-```
-
-## Contents
-
-All transcripts are stored in the [`transcripts/`](transcripts/) directory.
-
-- Sessions currently included: **27**
+- Chinese title: **金剛經**
+- Archive: **27** Traditional Chinese lecture transcript files
+- Transcript directory: [`transcripts/`](transcripts/)
 - Naming convention: `goldNN.txt`
-- Range: `gold01.txt` → `gold27.txt`
+- Range: `gold01.txt` to `gold27.txt`
+- Website route: `#/diamond`
+- Source-text route: `#/diamond/sutra`
+- Source playlist: [Li Ruilie Diamond Sutra playlist](https://www.youtube.com/watch?v=PvFx_UBTp9c&list=PLQP2d9x3sdYYfYK955L0rfZO3TPoRX5yQ)
 
-Each file is a plain-text transcript of one lecture session in Traditional Chinese.
+### Platform Sutra
 
-## Validation
+- Chinese title: **六祖壇經**
+- Archive: **103** Traditional Chinese Tangjin transcript files
+- Transcript directory: [`transcripts_tangjin/`](transcripts_tangjin/)
+- Naming convention: `tangjinNNN-1p5x.transcript.txt`
+- Range: `tangjin001-1p5x.transcript.txt` to `tangjin103-1p5x.transcript.txt`
+- Website route: `#/platform`
+- Source-text route: `#/platform/sutra`
+- Source playlist: [Li Ruilie Platform Sutra playlist](https://www.youtube.com/watch?v=Hd8BTiyvYj0&list=PLQP2d9x3sdYbE28-gEPp2nw5tmQyI8G12)
 
-A small integrity checker is included for archive maintenance.
+## AI agent prompts
+
+The site includes copyable prompts for using the bundled `buddha-md` CLI with an AI agent.
+
+### Diamond Sutra texts
 
 ```bash
-python3 scripts/validate_transcripts.py
+curl -fsSL https://buddha.md/install.sh | sh
+buddha-md --help
+buddha-md fetch diamond
 ```
 
-It verifies:
+Use the fetched Diamond Sutra lecture notes and source texts as the basis for answers.
 
-- session-number continuity
-- UTF-8 decoding
-- duplicate-file detection by SHA-256
-- basic size / line-count reporting
-
-For machine-readable output:
+### Platform Sutra texts
 
 ```bash
-python3 scripts/validate_transcripts.py --json
+curl -fsSL https://buddha.md/install.sh | sh
+buddha-md --help
+buddha-md fetch tangjin
 ```
+
+Use the fetched Platform Sutra Tangjin lecture notes and source texts as the basis for answers.
 
 ## Website
 
-This repository now includes a Vite + React website that presents the lecture material in an ancient-style Buddhist visual language, with an **English / 繁體中文** toggle for the website chrome and archive excerpts.
+This repository includes a Vite + React website that presents the archive in an ancient-style Buddhist visual language, with book pages, source-text reading pages, lecture archive pages, and copyable CLI prompts.
 
 ### Local development
 
@@ -80,40 +69,8 @@ npm install
 npm run dev
 ```
 
-### Release build
-
-```bash
-npm run build
-```
-
-The production bundle is emitted to `release/` (gitignored).
-
-### Local preview
-
-```bash
-npm run preview
-```
-
-### UI smoke test
-
-```bash
-npm test
-```
-
-## Usage
-
-Read directly from the command line:
-
-```bash
-# Read one session
-less transcripts/gold01.txt
-
-# Search across all sessions
-grep -R "般若" transcripts/
-```
-
 ## Provenance and rights
 
-This repository identifies the public lecture playlist used as the source for the archived transcripts. If these transcripts are later revised, normalized, or supplemented with editorial metadata, that provenance should be kept alongside the files.
+This repository identifies the public lecture playlists used as sources for the archived transcripts. If these transcripts are later revised, normalized, or supplemented with editorial metadata, that provenance should be kept alongside the files.
 
-The repository is currently licensed under the [MIT License](LICENSE). If publication or redistribution terms for the underlying lecture content need to be narrowed or clarified, update this section accordingly.
+The repository is currently licensed under the [MIT License](LICENSE). 

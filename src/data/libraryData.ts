@@ -30,8 +30,8 @@ export const libraryLocales: Record<Locale, {
   'zh-Hant': {
     htmlLang: 'zh-Hant',
     title: '佛經講記',
-    subtitle: '經書為中心之講記、原文與譯文',
-    description: '以李瑞烈老師之《金剛經》與《六祖壇經》講座逐字稿；各書頁再承載原典與後續擴充進度。',
+    subtitle: '佛學道理不變，但其乘載之文字可變',
+    description: '此網站以李瑞烈之《金剛經》與《六祖壇經》講座白話逐字稿為基礎，未來將整合更多資料來源。MIT License 開源，歡迎任何形式的貢獻與使用。',
     heroKicker: '書目 · 原典 · 講記',
     languageToggleLabel: '語文切換',
     languages: {
@@ -41,8 +41,8 @@ export const libraryLocales: Record<Locale, {
     entriesHeading: '典藏',
     entriesDescription: '典藏講記，全文閱讀，AI問答。',
     progressHeading: '擴充檢核清單',
-    copyLabel: 'Copy Prompts',
-    copiedLabel: 'Copied',
+    copyLabel: '複製提示',
+    copiedLabel: '已複製',
     progressItems: [
       '首頁已改為 book-centered 入口，只保留《金剛經》與《六祖壇經》兩個主要方向。',
       '《金剛經》既有二十七講與原文頁保留，移入獨立書頁。',
@@ -53,34 +53,34 @@ export const libraryLocales: Record<Locale, {
       {
         key: 'diamond',
         title: '金剛經',
-        subtitle: '金剛經二十七講講講全文 (李瑞烈老師)',
-        description: '保留既有《金剛經講記》完整 archive、二十七講全文頁，以及繁體中文／英文切換的《金剛經》原文頁。',
+        subtitle: '金剛經二十七講講講全文 (李瑞烈)',
+        description: '保留既有《金剛經》講記完整 archive、二十七講全文頁，以及繁體中文／英文切換的《金剛經》原文頁。',
         ctaLabel: '進入',
-        sourceLabel: '李瑞烈老師《金剛經》講記',
+        sourceLabel: '李瑞烈《金剛經》講記 YouTube',
         sourceUrl: 'https://www.youtube.com/watch?v=PvFx_UBTp9c&list=PLQP2d9x3sdYYfYK955L0rfZO3TPoRX5yQ',
         href: '#/diamond',
         cliPromptTitle: '讓AI Agent來回答金剛經講記相關問題，複製後貼給你的AI Agent',
         cliPromptBody: `Install CLI via curl:
 curl -fsSL https://buddha.md/install.sh | sh
 Use buddha-md --help to learn about this CLI tool.
-Download Diamond Sutra texts:
+Download Diamond Sutra (金剛經) texts:
 buddha-md fetch diamond
 Respond to questions based on lecture notes and source texts.`
       },
       {
         key: 'platform',
         title: '六祖壇經',
-        subtitle: '六祖壇經一百零三講講全文 (李瑞烈老師) ',
+        subtitle: '六祖壇經一百零三講講全文 (李瑞烈) ',
         description: '《六祖壇經》講記來源、Wikisource 繁體原文、公開英文譯本來源，並開放一百零三講繁體中文逐字稿全文頁。',
         ctaLabel: '進入',
-        sourceLabel: '李瑞烈老師《六祖壇經》講記',
+        sourceLabel: '李瑞烈《六祖壇經》講記 YouTube',
         sourceUrl: 'https://www.youtube.com/watch?v=Hd8BTiyvYj0&list=PLQP2d9x3sdYbE28-gEPp2nw5tmQyI8G12',
         href: '#/platform',
         cliPromptTitle: '讓AI Agent來回答六祖壇經講記相關問題，複製後貼給你的AI Agent',
         cliPromptBody: `Install CLI via curl:
 curl -fsSL https://buddha.md/install.sh | sh
 Use buddha-md --help to learn about this CLI tool.
-Download Tangjin texts:
+Download Tangjin (六祖壇經) texts:
 buddha-md fetch tangjin
 Respond to questions based on lecture notes and source texts.`
       }
@@ -124,8 +124,9 @@ curl -fsSL https://buddha.md/install.sh | sh
 
 Use buddha-md --help to learn about this CLI tool.
 
-Download Diamond Sutra texts:
-buddha-md fetch diamond`
+Download Diamond Sutra (金剛經) texts:
+buddha-md fetch diamond
+Respond to questions based on lecture notes and source texts.`
       },
       {
         key: 'platform',
@@ -142,8 +143,9 @@ curl -fsSL https://buddha.md/install.sh | sh
 
 Use buddha-md --help to learn about this CLI tool.
 
-Download Tangjin texts:
-buddha-md fetch tangjin`
+Download Tangjin (六祖壇經) texts:
+buddha-md fetch tangjin
+Respond to questions based on lecture notes and source texts.`
       }
     ]
   }
