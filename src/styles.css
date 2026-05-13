@@ -108,6 +108,12 @@ button {
   color: #d2aa61;
 }
 
+.hero__toolbar-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .language-toggle {
   display: inline-flex;
   padding: 4px;
@@ -134,6 +140,35 @@ button {
   color: #fff3d4;
   background: linear-gradient(180deg, rgba(189, 128, 38, 0.38), rgba(109, 65, 18, 0.38));
   box-shadow: inset 0 1px 0 rgba(255, 226, 169, 0.08);
+}
+
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(223, 184, 106, 0.18);
+  color: #f3dfad;
+  background: rgba(13, 7, 3, 0.42);
+  text-decoration: none;
+  transition: background 150ms ease, color 150ms ease, transform 150ms ease, border-color 150ms ease;
+}
+
+.github-link:hover,
+.github-link:focus-visible {
+  color: #fff3d4;
+  background: rgba(201, 153, 75, 0.18);
+  border-color: rgba(223, 184, 106, 0.34);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.github-link__icon {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
 }
 
 .hero__title {
@@ -647,6 +682,10 @@ button {
   .lecture-grid,
   .sutra-home__preview {
     grid-template-columns: 1fr;
+  }
+
+  .hero__toolbar-actions {
+    align-self: flex-start;
   }
 
   .language-toggle {

@@ -23,6 +23,7 @@ type Route =
   | { view: 'platformSutra' };
 
 const localeOrder: Locale[] = ['zh-Hant', 'en'];
+const githubRepositoryUrl = 'https://github.com/jackylee0424/buddha-md';
 
 function parseRoute(hash: string): Route {
   const cleaned = hash.replace(/^#/, '').replace(/\/$/, '');
@@ -323,12 +324,34 @@ function App() {
     </div>
   );
 
+  const renderGitHubLink = () => (
+    <a
+      className="github-link"
+      href={githubRepositoryUrl}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={locale === 'en' ? 'GitHub repository' : 'GitHub 原始碼'}
+      title={locale === 'en' ? 'GitHub repository' : 'GitHub 原始碼'}
+    >
+      <svg className="github-link__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.56 2.36 1.11 2.93.85.09-.66.35-1.11.63-1.36-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.05A9.32 9.32 0 0 1 12 6.92c.85 0 1.7.12 2.5.35 1.9-1.32 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.8 0 .27.18.59.69.49A10.09 10.09 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z" />
+      </svg>
+    </a>
+  );
+
+  const renderToolbarActions = (ariaLabel: string, labels: Record<Locale, string>) => (
+    <div className="hero__toolbar-actions">
+      {renderLanguageToggle(ariaLabel, labels)}
+      {renderGitHubLink()}
+    </div>
+  );
+
   const renderLanding = () => (
     <>
       <header className="hero scroll-panel">
         <div className="hero__toolbar">
           <p className="hero__kicker">{libraryContent.heroKicker}</p>
-          {renderLanguageToggle(libraryContent.languageToggleLabel, libraryContent.languages)}
+          {renderToolbarActions(libraryContent.languageToggleLabel, libraryContent.languages)}
         </div>
         <h1 className={locale === 'zh-Hant' ? 'hero__title hero__title--han' : 'hero__title hero__title--latin'}>{libraryContent.title}</h1>
         <p className="hero__subtitle">{libraryContent.subtitle}</p>
@@ -410,7 +433,7 @@ function App() {
       <header className="hero scroll-panel">
         <div className="hero__toolbar">
           <p className="hero__kicker">{diamondContent.heroKicker}</p>
-          {renderLanguageToggle(diamondContent.languageToggleLabel, diamondContent.languages)}
+          {renderToolbarActions(diamondContent.languageToggleLabel, diamondContent.languages)}
         </div>
         <h1 className={locale === 'zh-Hant' ? 'hero__title hero__title--han' : 'hero__title hero__title--latin'}>{diamondContent.title}</h1>
         <p className="hero__subtitle">{diamondContent.subtitle}</p>
@@ -473,7 +496,7 @@ function App() {
       <header className="hero scroll-panel">
         <div className="hero__toolbar">
           <p className="hero__kicker">{platformContent.heroKicker}</p>
-          {renderLanguageToggle(platformContent.languageToggleLabel, platformContent.languages)}
+          {renderToolbarActions(platformContent.languageToggleLabel, platformContent.languages)}
         </div>
         <h1 className={locale === 'zh-Hant' ? 'hero__title hero__title--han' : 'hero__title hero__title--latin'}>{platformContent.title}</h1>
         <p className="hero__subtitle">{platformContent.subtitle}</p>
@@ -637,7 +660,7 @@ function App() {
       <section className="scroll-panel detail-hero">
         <div className="hero__toolbar hero__toolbar--detail">
           <p className="hero__kicker">{chrome.pageEyebrow}</p>
-          {renderLanguageToggle(libraryContent.languageToggleLabel, libraryContent.languages)}
+          {renderToolbarActions(libraryContent.languageToggleLabel, libraryContent.languages)}
         </div>
         <p className="detail-note">{chrome.sourceLabel}</p>
         <h1 className={locale === 'en' ? 'hero__title hero__title--latin' : 'hero__title hero__title--han'}>{chrome.pageTitle}</h1>
@@ -699,7 +722,7 @@ function App() {
       <section className="scroll-panel detail-hero">
         <div className="hero__toolbar hero__toolbar--detail">
           <p className="hero__kicker">{chrome.readingLabel}</p>
-          {renderLanguageToggle(libraryContent.languageToggleLabel, libraryContent.languages)}
+          {renderToolbarActions(libraryContent.languageToggleLabel, libraryContent.languages)}
         </div>
         <p className="detail-note">{lecture ? (locale === 'en' && lectureHasEnglish ? chrome.chromeNoteReady : chrome.chromeNote) : chrome.chromeNote}</p>
         <h1 className={locale === 'en' && lectureHasEnglish ? 'hero__title hero__title--latin' : 'hero__title hero__title--han'}>{lectureTitle}</h1>

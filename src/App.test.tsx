@@ -39,6 +39,7 @@ describe('App', () => {
     expect(screen.queryByText(/--all/)).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: '繁體中文', pressed: true })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'English', pressed: false })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'GitHub 原始碼' })).toHaveAttribute('href', 'https://github.com/jackylee0424/buddha-md');
   });
 
   it('toggles the landing page chrome into English', () => {
@@ -62,6 +63,7 @@ describe('App', () => {
     expect(screen.getByRole('button', { name: 'Hide', expanded: true })).toBeInTheDocument();
     expect(screen.getByText(/Download Tangjin texts:/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'English', pressed: true })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'GitHub repository' })).toHaveAttribute('href', 'https://github.com/jackylee0424/buddha-md');
   });
 
   it('copies a book-card CLI prompt from the landing page', async () => {
