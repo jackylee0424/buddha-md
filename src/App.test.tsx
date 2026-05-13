@@ -58,10 +58,10 @@ describe('App', () => {
     expect(screen.getByRole('heading', { name: 'Let AI Agent answer Diamond Sutra questions, copy and paste this to your AI Agent to get started', level: 4 })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Let AI Agent answer Platform Sutra questions, copy and paste this to your AI Agent to get started', level: 4 })).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: 'Show', expanded: false })).toHaveLength(2);
-    expect(screen.queryByText(/Download Tangjin texts:/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Download Tangjin.*texts:/i)).not.toBeInTheDocument();
     fireEvent.click(screen.getAllByRole('button', { name: 'Show' })[1]);
     expect(screen.getByRole('button', { name: 'Hide', expanded: true })).toBeInTheDocument();
-    expect(screen.getByText(/Download Tangjin texts:/i)).toBeInTheDocument();
+    expect(screen.getByText(/Download Tangjin.*texts:/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'English', pressed: true })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'GitHub repository' })).toHaveAttribute('href', 'https://github.com/jackylee0424/buddha-md');
   });
@@ -75,12 +75,12 @@ describe('App', () => {
 
     render(<App />);
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'Copy Prompts' })[1]);
+    fireEvent.click(screen.getAllByRole('button', { name: '複製提示' })[1]);
 
     expect(writeText).toHaveBeenCalledWith(expect.stringContaining('curl -fsSL https://buddha.md/install.sh | sh'));
     expect(writeText).toHaveBeenCalledWith(expect.stringContaining('buddha-md --help'));
     expect(writeText).toHaveBeenCalledWith(expect.stringContaining('buddha-md fetch tangjin'));
-    expect(await screen.findByRole('button', { name: 'Copied' })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: '已複製' })).toBeInTheDocument();
   });
 
   it('renders the Diamond Sutra book page with its existing archive', () => {

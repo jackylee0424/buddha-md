@@ -384,19 +384,19 @@ function App() {
                     </div>
                     <div className={isPromptExpanded ? 'book-card__prompt book-card__prompt--expanded' : 'book-card__prompt'}>
                       <div className="book-card__prompt-header">
-                        <h4>{book.cliPromptTitle} <span
-                            
-                            
+                        <h4>{book.cliPromptTitle}</h4>
+                        <div className="book-card__prompt-actions">
+                          <button
+                            type="button"
+                            className="book-card__prompt-toggle"
                             aria-expanded={isPromptExpanded}
                             aria-controls={promptBodyId}
                             onClick={() => setExpandedPromptId((current) => (current === promptId ? null : promptId))}
                           >
                             {isPromptExpanded
-                              ? '-'
-                              : '+'}
-                          </span></h4>
-                        <div className="book-card__prompt-actions">
-                          
+                              ? (locale === 'en' ? 'Hide' : '收合')
+                              : (locale === 'en' ? 'Show' : '展開')}
+                          </button>
                           <button
                             type="button"
                             className="book-card__copy"
