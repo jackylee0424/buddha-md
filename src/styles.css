@@ -633,6 +633,15 @@ button {
     align-items: stretch;
   }
 
+  .book-card__prompt-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .book-card__prompt-actions {
+    justify-content: flex-start;
+  }
+
   .teaching-grid,
   .book-grid,
   .lecture-grid,
