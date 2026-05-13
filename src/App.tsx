@@ -57,6 +57,7 @@ function App() {
   const [route, setRoute] = useState<Route>(() => parseRoute(window.location.hash));
   const [platformTranscriptState, setPlatformTranscriptState] = useState<{ id: number; paragraphs: string[] } | null>(null);
   const [copiedPromptId, setCopiedPromptId] = useState<string | null>(null);
+  const [expandedPromptId, setExpandedPromptId] = useState<string | null>(null);
 
   const libraryContent = libraryLocales[locale];
   const diamondContent = localizedContent[locale];
@@ -343,34 +344,51 @@ function App() {
           </div>
           <div className="book-grid">
             {libraryContent.books.map((book) => (
-              <article key={book.key} className="book-card">
-                <div className="teaching-card__seal" aria-hidden="true">卷</div>
-                <p className="book-card__kicker">{book.subtitle}</p>
-                <h3>{book.title}</h3>
-                <p>{book.description}</p>
-                <div className="book-card__actions">
-                  <a className="detail-link" href={book.href}>{book.ctaLabel}</a>
-                  <a className="hero__source sutra-home__source" href={book.sourceUrl} target="_blank" rel="noreferrer">{book.sourceLabel}</a>
-                </div>
-                <div className="book-card__prompt">
-                  <div className="book-card__prompt-header">
-                    <h4>{book.cliPromptTitle}</h4>
-                    <button
-                      type="button"
-                      className="book-card__copy"
-                      onClick={() => void copyPrompt(`${book.key}-cli-prompt`, book.cliPromptBody)}
-                    >
-                      {copiedPromptId === `${book.key}-cli-prompt` ? libraryContent.copiedLabel : libraryContent.copyLabel}
-                    </button>
-                  </div>
-                  <pre className="book-card__prompt-body"><code>{book.cliPromptBody}</code></pre>
-                </div>
-              </article>
+              (() => {
+                const promptId = `${book.key}-cli-prompt`;
+                const promptBodyId = `${promptId}-body`;
+                const isPromptExpanded = expandedPromptId === promptId;
+
+                return (
+                  <article key={book.key} className="book-card">
+                    <div className="teaching-card__seal" aria-hidden="true">卷</div>
+                    <p className="book-card__kicker">{book.subtitle}</p>
+                    <h3>{book.title}</h3>
+                    <p>{book.description}</p>
+                    <div className="book-card__actions">
+                      <a className="detail-link" href={book.href}>{book.ctaLabel}</a>
+                      <a className="hero__source sutra-home__source" href={book.sourceUrl} target="_blank" rel="noreferrer">{book.sourceLabel}</a>
+                    </div>
+                    <div className={isPromptExpanded ? 'book-card__prompt book-card__prompt--expanded' : 'book-card__prompt'}>
+                      <div className="book-card__prompt-header">
+                        <h4>{book.cliPromptTitle} <span
+                            aria-expanded={isPromptExpanded}
+                            aria-controls={promptBodyId}
+                            onClick={() => setExpandedPromptId((current) => (current === promptId ? null : promptId))}
+                          >
+                            {isPromptExpanded ? '-' : '+'}
+                          </span></h4>
+                        <div className="book-card__prompt-actions">
+                          
+                          <button
+                            type="button"
+                            className="book-card__copy"
+                            onClick={() => void copyPrompt(promptId, book.cliPromptBody)}
+                          >
+                            {copiedPromptId === promptId ? libraryContent.copiedLabel : libraryContent.copyLabel}
+                          </button>
+                        </div>
+                      </div>
+                      {isPromptExpanded ? <pre id={promptBodyId} className="book-card__prompt-body"><code>{book.cliPromptBody}</code></pre> : null}
+                    </div>
+                  </article>
+                );
+              })()
             ))}
           </div>
         </section>
 
-        <section className="scroll-panel section-card section-card--ritual">
+        {/* <section className="scroll-panel section-card section-card--ritual">
           <div className="section-heading">
             <span className="section-heading__eyebrow">TODO</span>
             <h2>{libraryContent.progressHeading}</h2>
@@ -378,7 +396,7 @@ function App() {
           <ol className="ritual-list progress-list">
             {libraryContent.progressItems.map((item) => <li key={item}>{item}</li>)}
           </ol>
-        </section>
+        </section> */}
       </main>
     </>
   );

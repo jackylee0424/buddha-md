@@ -29,9 +29,9 @@ export const libraryLocales: Record<Locale, {
 }> = {
   'zh-Hant': {
     htmlLang: 'zh-Hant',
-    title: '佛經講記典藏',
-    subtitle: '以書為中心整理講記、原文與譯文',
-    description: '首頁改為乾淨的藏書入口，先集中呈現《金剛經》與《六祖壇經》兩部書；各書頁再承載原典、講記 archive 與後續擴充進度。',
+    title: '佛經講記',
+    subtitle: '經書為中心之講記、原文與譯文',
+    description: '以李瑞烈老師之《金剛經》與《六祖壇經》講座逐字稿；各書頁再承載原典與後續擴充進度。',
     heroKicker: '書目 · 原典 · 講記',
     languageToggleLabel: '語文切換',
     languages: {
@@ -39,9 +39,9 @@ export const libraryLocales: Record<Locale, {
       en: 'English'
     },
     entriesHeading: '典藏',
-    entriesDescription: '每一部書都有獨立首頁、原文閱讀頁與逐講講記頁，後續新增書目時可沿用同一套結構。',
+    entriesDescription: '典藏講記，全文閱讀，AI問答。',
     progressHeading: '擴充檢核清單',
-    copyLabel: 'Copy',
+    copyLabel: 'Copy Prompts',
     copiedLabel: 'Copied',
     progressItems: [
       '首頁已改為 book-centered 入口，只保留《金剛經》與《六祖壇經》兩個主要方向。',
@@ -53,38 +53,36 @@ export const libraryLocales: Record<Locale, {
       {
         key: 'diamond',
         title: '金剛經',
-        subtitle: '二十七講講記(李瑞烈老師)與經文原典',
+        subtitle: '金剛經二十七講講講全文 (李瑞烈老師)',
         description: '保留既有《金剛經講記》完整 archive、二十七講全文頁，以及繁體中文／英文切換的《金剛經》原文頁。',
         ctaLabel: '進入',
         sourceLabel: '李瑞烈老師《金剛經》講記',
         sourceUrl: 'https://www.youtube.com/watch?v=PvFx_UBTp9c&list=PLQP2d9x3sdYYfYK955L0rfZO3TPoRX5yQ',
         href: '#/diamond',
-        cliPromptTitle: '下載金剛經原始文字',
+        cliPromptTitle: '讓AI Agent來回答金剛經講記相關問題，複製後貼給你的AI Agent',
         cliPromptBody: `Install CLI via curl:
 curl -fsSL https://buddha.md/install.sh | sh
-
 Use buddha-md --help to learn about this CLI tool.
-
 Download Diamond Sutra texts:
-buddha-md fetch diamond`
+buddha-md fetch diamond
+Respond to questions based on lecture notes and source texts.`
       },
       {
         key: 'platform',
         title: '六祖壇經',
-        subtitle: '壇經原文、英文譯文與一百零三講講全文 (李瑞烈老師) ',
-        description: '《六祖壇經》獨立書頁已接入 tangjin 講記來源、Wikisource 繁體原文、公開英文譯本來源，並開放一百零三講繁體中文逐字稿全文頁。',
+        subtitle: '六祖壇經一百零三講講全文 (李瑞烈老師) ',
+        description: '《六祖壇經》講記來源、Wikisource 繁體原文、公開英文譯本來源，並開放一百零三講繁體中文逐字稿全文頁。',
         ctaLabel: '進入',
         sourceLabel: '李瑞烈老師《六祖壇經》講記',
         sourceUrl: 'https://www.youtube.com/watch?v=Hd8BTiyvYj0&list=PLQP2d9x3sdYbE28-gEPp2nw5tmQyI8G12',
         href: '#/platform',
-        cliPromptTitle: '下載 tangjin 原始文字',
+        cliPromptTitle: '讓AI Agent來回答六祖壇經講記相關問題，複製後貼給你的AI Agent',
         cliPromptBody: `Install CLI via curl:
 curl -fsSL https://buddha.md/install.sh | sh
-
 Use buddha-md --help to learn about this CLI tool.
-
 Download Tangjin texts:
-buddha-md fetch tangjin`
+buddha-md fetch tangjin
+Respond to questions based on lecture notes and source texts.`
       }
     ]
   },
@@ -102,7 +100,7 @@ buddha-md fetch tangjin`
     entriesHeading: 'Two main book entries',
     entriesDescription: 'Each book has its own home, source-text reading page, and lecture-note pages, so future books can reuse the same pattern.',
     progressHeading: 'Expansion checklist',
-    copyLabel: 'Copy',
+    copyLabel: 'Copy Prompts',
     copiedLabel: 'Copied',
     progressItems: [
       'Landing page refactored into a book-centered entry with only Diamond Sutra and Platform Sutra as the primary paths.',
@@ -116,11 +114,11 @@ buddha-md fetch tangjin`
         title: 'Diamond Sutra',
         subtitle: 'Twenty-seven lectures plus source text',
         description: 'Keeps the existing Diamond Sutra lecture archive, all twenty-seven full lecture pages, and the Chinese/English source-text reading route.',
-        ctaLabel: 'Enter Diamond Sutra',
+        ctaLabel: 'Enter',
         sourceLabel: 'Li Ruilie Diamond Sutra lecture playlist',
         sourceUrl: 'https://www.youtube.com/watch?v=PvFx_UBTp9c&list=PLQP2d9x3sdYYfYK955L0rfZO3TPoRX5yQ',
         href: '#/diamond',
-        cliPromptTitle: 'Download Diamond Sutra raw texts',
+        cliPromptTitle: 'Let AI Agent answer Diamond Sutra questions, copy and paste this to your AI Agent to get started',
         cliPromptBody: `Install CLI via curl:
 curl -fsSL https://buddha.md/install.sh | sh
 
@@ -134,11 +132,11 @@ buddha-md fetch diamond`
         title: 'Platform Sutra',
         subtitle: 'Chinese text, English reading, and 103 lectures',
         description: 'Adds a dedicated Platform Sutra book page wired to the Tangjin lecture source, Wikisource Traditional Chinese text, a public English translation source, and all 103 Traditional Chinese transcript pages.',
-        ctaLabel: 'Enter Platform Sutra',
+        ctaLabel: 'Enter',
         sourceLabel: 'Platform Sutra lecture playlist',
         sourceUrl: 'https://www.youtube.com/watch?v=Hd8BTiyvYj0&list=PLQP2d9x3sdYbE28-gEPp2nw5tmQyI8G12',
         href: '#/platform',
-        cliPromptTitle: 'Download Tangjin raw texts',
+        cliPromptTitle: 'Let AI Agent answer Platform Sutra questions, copy and paste this to your AI Agent to get started',
         cliPromptBody: `Install CLI via curl:
 curl -fsSL https://buddha.md/install.sh | sh
 
